@@ -2,12 +2,14 @@
     <div v-for="trip of chunk(getFilterTrips, 2)" class="d-flex flex-column flex-md-row align-items-center justify-content-center">
         <div class="p-3 m-3">
             <trip-container
-                :trip="trip[0]">
+                :trip="trip[0]"
+                :is-filterable="true">
             </trip-container>
         </div>
         <div v-if="trip[1]" class="p-3 m-3">
             <trip-container
-                :trip="trip[1]">
+                :trip="trip[1]"
+                :is-filterable="true">
             </trip-container>
         </div>
     </div>

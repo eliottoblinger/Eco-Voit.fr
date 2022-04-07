@@ -6,13 +6,15 @@
             <div class="p-3 m-3">
                 <h2 class="p-3 text-green-app">Le moins cher</h2>
                 <trip-container
-                    :trip="{{ json_encode($cheaperTrip, null) }}">
+                    :trip="{{ json_encode($cheaperTrip, null) }}"
+                    :is-filterable="false">
                 </trip-container>
             </div>
             <div class="p-3 m-3">
                 <h2 class="p-3">Le plus rapide</h2>
                 <trip-container
-                    :trip="{{ json_encode($fasterTrip, null) }}">
+                    :trip="{{ json_encode($fasterTrip, null) }}"
+                    :is-filterable="false">
                 </trip-container>
             </div>
         </div>

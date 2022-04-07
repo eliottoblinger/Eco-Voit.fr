@@ -52,7 +52,14 @@ Route::get('/trips', function (Request $request) {
         ->orderBy('departure_date')
         ->get();
 
-    return view('trip.show', ['cheaperTrip' => $cheaperTrip, 'fasterTrip' => $fasterTrip, 'trips' => $trips]);
+    return view('trips.index', ['cheaperTrip' => $cheaperTrip, 'fasterTrip' => $fasterTrip, 'trips' => $trips]);
+});
+
+Route::get('/trips/{unique_key}', function ($uniqueKey) {
+
+    $trip = Trip::where('unique_key', $uniqueKey)->first();
+
+    return view('trips.show', ['trip' => $trip]);
 });
 
 Route::get('/auth/register', function () { return view('auth.register'); })->name("auth.register");

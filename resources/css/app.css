@@ -34,6 +34,10 @@ html, body{
     background-color: #346751 !important;
 }
 
+.vc-time-month, .vc-time-day{
+    color: #346751 !important;
+}
+
 
 input{
     border: none !important;
@@ -108,4 +112,16 @@ input[type="radio"]:checked::before { /* selected */
     color: black;
     font-style: normal;
     font-size: 100%;
+}
+
+.accordion-button {
+    background: none !important;
+    border: none !important;
+    color: black !important;
+    outline-style: none !important;
+    box-shadow: none !important;
+}
+
+.accordion-button:after {
+    background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23000000'><path fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/></svg>") !important;
 }
