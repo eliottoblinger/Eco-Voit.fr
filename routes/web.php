@@ -62,4 +62,4 @@ Route::get('/trips/{unique_key}', function ($uniqueKey) {
     return view('trips.show', ['trip' => $trip]);
 });
 
-Route::get('/auth/register', function () { return view('auth.register'); })->name("auth.register");
+Route::get('/register', function () { return view('auth.register'); })->name("auth.register");

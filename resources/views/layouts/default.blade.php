@@ -14,7 +14,9 @@
         <app-header></app-header>
     @endif
     @yield('content')
-    <app-footer></app-footer>
+    @if(!Route::is('auth.*'))
+        <app-footer></app-footer>
+    @endif
 </div>
 
 <script type="text/javascript" src="{{ asset('js/app.js') }}" ></script>
