@@ -21601,6 +21601,10 @@ html, body{
     background-color: #161616 !important;
 }
 
+.bg-darker-gradient-app {
+    background: linear-gradient(90deg, #151515 0%, #292929 51.04%, #161616 100%) !important;
+}
+
 .bg-gray-light-app{
     background-color: #F5F5F5 !important;
 }
@@ -21668,9 +21672,28 @@ input[type="radio"]:checked::before { /* selected */
     background: radial-gradient(#346751 36%, transparent 38%);
 }
 
+.input-auth-app, .input-auth-app:focus  {
+    border-bottom: 1px solid #858585 !important;
+}
+
+.input-auth-error-app, .input-auth-error-app:focus  {
+    border-bottom: 1px solid red !important;
+}
+
+.input-auth-success-app, .input-auth-success-app:focus  {
+    border-bottom: 1px solid green !important;
+}
+
 .vertical-line{
     border-left: 3px dashed #346751;
     display: inline-block;
     height: 50px;
+}
+
+.link-register-app {
+    text-decoration: none;
+    color: black;
+    font-style: normal;
+    font-size: 100%;
 }
 

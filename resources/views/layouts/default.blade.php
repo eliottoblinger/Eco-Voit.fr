@@ -10,7 +10,9 @@
 <body>
 
 <div id="app">
-    <app-header></app-header>
+    @if(!Route::is('auth.*'))
+        <app-header></app-header>
+    @endif
     @yield('content')
 </div>
 

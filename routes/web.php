@@ -54,3 +54,5 @@ Route::get('/trips', function (Request $request) {
 
     return view('trip.show', ['cheaperTrip' => $cheaperTrip, 'fasterTrip' => $fasterTrip, 'trips' => $trips]);
 });
+
+Route::get('/auth/register', function () { return view('auth.register'); })->name("auth.register");
