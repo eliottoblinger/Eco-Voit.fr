@@ -21,9 +21,9 @@ class CreateTripsTable extends Migration
             $table->string('arrival_city');
             $table->string('arrival_zip_code');
             $table->string('arrival_address');
-            $table->datetime('trip_date');
+            $table->datetime('departure_date');
+            $table->datetime('arrival_date');
             $table->float('kilometers');
-            $table->time('estimating_time');
             $table->float('price');
             $table->text('description');
             $table->integer('number_of_seats');

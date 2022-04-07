@@ -1,0 +1,88 @@
+html, body{
+    width: 100%;
+    height: 100%;
+    font-family: "Roboto Light", sans-serif;
+    font-weight: 400;
+    font-size: 12px;
+}
+
+.bg-dark-app{
+    background-color: #2D2D2D !important;
+}
+
+.bg-darker-app{
+    background-color: #161616 !important;
+}
+
+.bg-gray-light-app{
+    background-color: #F5F5F5 !important;
+}
+
+.bg-green-app{
+    background-color: #346751 !important;
+}
+
+.text-green-app{
+    color: #346751 !important;
+}
+
+.vc-highlight{
+    background-color: #346751 !important;
+}
+
+
+input{
+    border: none !important;
+    background-color: unset !important;
+    width: 150px !important;
+}
+
+input:focus{
+    border: none !important;
+    outline-style: none !important;
+    box-shadow: none !important;
+    background-color: unset !important;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    color: transparent;
+    background: none;
+    z-index: 1;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=number] {
+    -moz-appearance: textfield;
+    width: 20px !important;
+}
+
+input[type="radio"] {
+    visibility: hidden;
+    width: 10px !important;
+}
+
+input[type="radio"]::before {
+    border: 2px solid #346751 !important;
+    height: 14px;
+    width: 14px;
+    border-radius: 50%;
+    display: block;
+    content: " ";
+    cursor: pointer;
+    visibility: visible;
+}
+
+input[type="radio"]:checked::before { /* selected */
+    background: radial-gradient(#346751 36%, transparent 38%);
+}
+
+.vertical-line{
+    border-left: 3px dashed #346751;
+    display: inline-block;
+    height: 50px;
+}
