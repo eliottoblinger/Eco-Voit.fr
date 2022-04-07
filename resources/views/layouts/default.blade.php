@@ -12,6 +12,7 @@
 <div id="app">
     <app-header></app-header>
     @yield('content')
+    <app-footer></app-footer>
 </div>
 
 <script type="text/javascript" src="{{ asset('js/app.js') }}" ></script>
