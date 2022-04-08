@@ -2,6 +2,8 @@ require('./bootstrap');
 
 import "bootstrap";
 
+window.bootstrap = require('bootstrap');
+
 import { createApp } from "vue"
 
 import VCalendar from 'v-calendar';
