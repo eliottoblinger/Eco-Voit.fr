@@ -31,7 +31,7 @@
                 </template>
             </v-date-picker>
         </div>
-        <div style="width: 15%;" class="px-3 d-flex align-items-center justify-content-between border-end">
+        <div style="width: 15%;" class="px-3 d-flex align-items-center justify-content-between border-end position-relative">
             <div class="d-flex">
                 <svg class="me-1" width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <g clip-path="url(#clip0_27_134)">
@@ -45,12 +45,12 @@
                 </svg>
                 <input type="number" min="1" v-model="nbOfPassengers">
             </div>
-            <div class="d-flex align-items-center">
+            <div class="d-flex align-items-center position-absolute end-0 me-3">
                 <i class="fa fa-minus me-3 cursor-pointer" @click="nbOfPassengers > 1 ? nbOfPassengers-- : nbOfPassengers"></i>
                 <i class="fa fa-plus cursor-pointer" @click="nbOfPassengers++"></i>
             </div>
         </div>
-        <div style="width: 15%; border-bottom-left-radius: unset !important; border-top-left-radius: unset !important;" class="px-5 fw-bold bg-green-app text-white rounded-pill d-flex align-items-center justify-content-center"
+        <div style="width: 15%; border-bottom-left-radius: unset !important; border-top-left-radius: unset !important;" class="cursor-pointer px-5 fw-bold bg-green-app text-white rounded-pill d-flex align-items-center justify-content-center"
             @click="searchTrip">
             Rechercher
         </div>
