@@ -21722,3 +21722,7 @@ input[type="radio"]:checked::before { /* selected */
     border: solid 1px #346751 !important;
 }
 
+.cursor-pointer:hover{
+    cursor: pointer !important;
+}
+
