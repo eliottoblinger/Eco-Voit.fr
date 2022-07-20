@@ -6,7 +6,7 @@
             <h2 class="fw-bold">Trouver votre prochaine destination</h2>
             <p class="text-muted">Indiquer dans la barre ci-dessous votre itinéraire</p>
         </div>
-        <searching-bar></searching-bar>
+        <searching-bar-component/>
     </div>
     <div class="bg-white d-flex align-items-center py-3" style="min-height: 50vh;">
         <div class="d-flex flex-column flex-lg-row mx-auto w-75">
@@ -171,3 +171,9 @@
         </div>
     </div>
 @endsection
+<script>
+    import SearchingBarComponent from "../js/components/tools/SearchingBarComponent";
+    export default {
+        components: {SearchingBarComponent}
+    }
+</script>

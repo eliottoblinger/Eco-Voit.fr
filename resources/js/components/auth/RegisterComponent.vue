@@ -78,7 +78,7 @@
 
 <script>
 export default {
-    name: "RegisterContainer",
+    name: "RegisterComponent",
     mounted(){
         var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
         console.log(tooltipTriggerList)

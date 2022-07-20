@@ -75,7 +75,7 @@
 import { mapGetters } from "vuex";
 
 export default {
-    name: "TripContainer",
+    name: "TripComponent",
     props: {
         trip: Object,
         isFilterable: Boolean

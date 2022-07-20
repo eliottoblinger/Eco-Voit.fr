@@ -118,7 +118,7 @@
 <script>
 
 export default {
-    name: "SearchingBar",
+    name: "SearchingBarComponent",
     data(){
         return {
             departureCity: '',

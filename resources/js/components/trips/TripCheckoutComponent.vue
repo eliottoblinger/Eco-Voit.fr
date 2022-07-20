@@ -113,7 +113,7 @@
 import {mapGetters} from "vuex";
 
 export default {
-    name: "TripCheckout",
+    name: "TripCheckoutComponent",
     props: {
         trip: Object
     },

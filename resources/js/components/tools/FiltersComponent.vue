@@ -41,7 +41,7 @@
 import {mapGetters, mapMutations} from "vuex";
 
 export default {
-    name: "FiltersContainer",
+    name: "FiltersComponent",
     data(){
         return {
             radioBtnFilter: 'departure',

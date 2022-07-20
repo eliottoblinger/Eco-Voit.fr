@@ -1,29 +1,27 @@
 <template>
     <div v-for="trip of chunk(getFilterTrips, 2)" class="d-flex flex-column flex-md-row align-items-center justify-content-center">
         <div class="p-3 m-3">
-            <trip-container
+            <trip-component
                 :trip="trip[0]"
-                :is-filterable="true">
-            </trip-container>
+                :is-filterable="true"/>
         </div>
         <div v-if="trip[1]" class="p-3 m-3">
-            <trip-container
+            <trip-component
                 :trip="trip[1]"
-                :is-filterable="true">
-            </trip-container>
+                :is-filterable="true"/>
         </div>
     </div>
 </template>
 
 <script>
 
-import TripContainer from './TripContainer';
+import TripComponent from './TripComponent';
 import { mapMutations, mapGetters } from 'vuex'
 
 export default {
-    name: "TripsContainer",
+    name: "TripsComponent",
     components: {
-        TripContainer
+        TripComponent
     },
     props: {
         trips: Array

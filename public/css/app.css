@@ -21629,7 +21629,6 @@ html, body{
 input{
     border: none !important;
     background-color: unset !important;
-    width: 150px !important;
 }
 
 input:focus{
@@ -21723,6 +21722,3 @@ input[type="radio"]:checked::before { /* selected */
     border: solid 1px #346751 !important;
 }
 
-textarea{
-    resize: none;
-}

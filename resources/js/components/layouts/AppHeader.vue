@@ -29,7 +29,7 @@
                             <li><a class="dropdown-item" href="/login">Connexion</a></li>
                             <li><a class="dropdown-item" href="/register">Inscription</a></li>
                             <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item p-3 fw-bold" href="#">Déconnexion</a></li>
+                            <li><a class="dropdown-item p-3 fw-bold" href="/logout">Déconnexion</a></li>
                         </div>
 
                         <div v-else>
