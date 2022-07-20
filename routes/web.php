@@ -2,8 +2,6 @@
 
 use App\Http\Controllers\TripController;
 use App\Http\Controllers\UserController;
-use App\Models\Trip;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
