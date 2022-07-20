@@ -1,18 +1,18 @@
 <template>
-    <div class="d-none d-lg-flex bg-white shadow-lg text-center rounded-pill w-75 mb-3">
-        <div class="col-3 my-3 px-3 d-flex align-items-center justify-content-start border-end">
+    <div class="d-none d-lg-flex bg-white shadow-lg rounded-pill mb-3 w-75">
+        <div style="width: 25%;" class="my-3 px-3 d-flex align-items-center justify-content-start border-end">
             <svg class="me-1" width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M13 1.625C10.6305 1.6278 8.35883 2.57032 6.68333 4.24582C5.00783 5.92132 4.0653 8.19299 4.06251 10.5625C4.05967 12.4989 4.69218 14.3827 5.86301 15.925C5.86301 15.925 6.10676 16.2459 6.14657 16.2923L13 24.375L19.8567 16.2882C19.8924 16.2451 20.137 15.925 20.137 15.925L20.1378 15.9226C21.3081 14.3809 21.9403 12.498 21.9375 10.5625C21.9347 8.19299 20.9922 5.92132 19.3167 4.24582C17.6412 2.57032 15.3695 1.6278 13 1.625V1.625ZM13 13.8125C12.3572 13.8125 11.7289 13.6219 11.1944 13.2648C10.6599 12.9077 10.2434 12.4001 9.9974 11.8062C9.75142 11.2124 9.68706 10.5589 9.81246 9.92846C9.93786 9.29802 10.2474 8.71892 10.7019 8.2644C11.1564 7.80988 11.7355 7.50035 12.366 7.37495C12.9964 7.24955 13.6499 7.31391 14.2437 7.55989C14.8376 7.80588 15.3452 8.22244 15.7023 8.7569C16.0594 9.29136 16.25 9.91971 16.25 10.5625C16.2489 11.4241 15.9062 12.2501 15.2969 12.8594C14.6877 13.4687 13.8616 13.8114 13 13.8125V13.8125Z" fill="#CBCBCB"/>
             </svg>
             <input type="text" placeholder="Départ" v-model="departureCity">
         </div>
-        <div class="col-3 my-3 px-3 d-flex align-items-center justify-content-start border-end">
+        <div style="width: 25%;" class="my-3 px-3 d-flex align-items-center justify-content-start border-end">
             <svg class="me-1" width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M13 1.625C10.6305 1.6278 8.35883 2.57032 6.68333 4.24582C5.00783 5.92132 4.0653 8.19299 4.06251 10.5625C4.05967 12.4989 4.69218 14.3827 5.86301 15.925C5.86301 15.925 6.10676 16.2459 6.14657 16.2923L13 24.375L19.8567 16.2882C19.8924 16.2451 20.137 15.925 20.137 15.925L20.1378 15.9226C21.3081 14.3809 21.9403 12.498 21.9375 10.5625C21.9347 8.19299 20.9922 5.92132 19.3167 4.24582C17.6412 2.57032 15.3695 1.6278 13 1.625V1.625ZM13 13.8125C12.3572 13.8125 11.7289 13.6219 11.1944 13.2648C10.6599 12.9077 10.2434 12.4001 9.9974 11.8062C9.75142 11.2124 9.68706 10.5589 9.81246 9.92846C9.93786 9.29802 10.2474 8.71892 10.7019 8.2644C11.1564 7.80988 11.7355 7.50035 12.366 7.37495C12.9964 7.24955 13.6499 7.31391 14.2437 7.55989C14.8376 7.80588 15.3452 8.22244 15.7023 8.7569C16.0594 9.29136 16.25 9.91971 16.25 10.5625C16.2489 11.4241 15.9062 12.2501 15.2969 12.8594C14.6877 13.4687 13.8616 13.8114 13 13.8125V13.8125Z" fill="#CBCBCB"/>
             </svg>
             <input type="text" placeholder="Destination" v-model="arrivalCity">
         </div>
-        <div class="col-3 my-3 px-3 d-flex align-items-center justify-content-start border-end">
+        <div style="width: 25%;" class="my-3 px-3 d-flex align-items-center justify-content-start border-end">
             <svg class="me-1" width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M9.75 10.8333V13H7.58333V10.8333H9.75ZM14.0833 10.8333V13H11.9167V10.8333H14.0833ZM18.4167 10.8333V13H16.25V10.8333H18.4167ZM20.5833 3.24999C21.158 3.24999 21.7091 3.47827 22.1154 3.8846C22.5217 4.29093 22.75 4.84203 22.75 5.41666V20.5833C22.75 21.158 22.5217 21.7091 22.1154 22.1154C21.7091 22.5217 21.158 22.75 20.5833 22.75H5.41667C4.84203 22.75 4.29093 22.5217 3.8846 22.1154C3.47827 21.7091 3.25 21.158 3.25 20.5833V5.41666C3.25 4.84203 3.47827 4.29093 3.8846 3.8846C4.29093 3.47827 4.84203 3.24999 5.41667 3.24999H6.5V1.08333H8.66667V3.24999H17.3333V1.08333H19.5V3.24999H20.5833ZM20.5833 20.5833V8.66666H5.41667V20.5833H20.5833ZM9.75 15.1667V17.3333H7.58333V15.1667H9.75ZM14.0833 15.1667V17.3333H11.9167V15.1667H14.0833ZM18.4167 15.1667V17.3333H16.25V15.1667H18.4167Z" fill="#CBCBCB"/>
             </svg>
@@ -20,6 +20,7 @@
                 v-model="departureDate"
                 mode="date"
                 :popover="{ placement: $screens({ default: 'right' }) }"
+                :min-date="new Date()"
                 is24hr>
                 <template v-slot="{ inputValue, inputEvents }">
                     <input
@@ -30,7 +31,7 @@
                 </template>
             </v-date-picker>
         </div>
-        <div class="col-2 px-3 d-flex align-items-center justify-content-between border-end">
+        <div style="width: 15%;" class="px-3 d-flex align-items-center justify-content-between border-end">
             <div class="d-flex">
                 <svg class="me-1" width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <g clip-path="url(#clip0_27_134)">
@@ -45,17 +46,16 @@
                 <input type="number" min="1" v-model="nbOfPassengers">
             </div>
             <div class="d-flex align-items-center">
-                <i class="fa fa-minus me-3" @click="nbOfPassengers > 1 ? nbOfPassengers-- : nbOfPassengers"></i>
-                <i class="fa fa-plus" @click="nbOfPassengers++"></i>
+                <i class="fa fa-minus me-3 cursor-pointer" @click="nbOfPassengers > 1 ? nbOfPassengers-- : nbOfPassengers"></i>
+                <i class="fa fa-plus cursor-pointer" @click="nbOfPassengers++"></i>
             </div>
         </div>
-        <div class="col-2 fw-bold bg-green-app text-white rounded-pill d-flex align-items-center justify-content-center"
-             style="border-bottom-left-radius: unset !important; border-top-left-radius: unset !important;"
+        <div style="width: 15%; border-bottom-left-radius: unset !important; border-top-left-radius: unset !important;" class="px-5 fw-bold bg-green-app text-white rounded-pill d-flex align-items-center justify-content-center"
             @click="searchTrip">
             Rechercher
         </div>
     </div>
-    <div class="d-flex flex-column bg-white shadow-lg text-center rounded-3 w-75 mb-3 d-flex d-lg-none">
+    <div class="d-flex flex-column bg-white shadow-lg text-center rounded-3 mb-3 d-lg-none">
         <div class="d-flex p-3">
             <svg class="me-1" width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M13 1.625C10.6305 1.6278 8.35883 2.57032 6.68333 4.24582C5.00783 5.92132 4.0653 8.19299 4.06251 10.5625C4.05967 12.4989 4.69218 14.3827 5.86301 15.925C5.86301 15.925 6.10676 16.2459 6.14657 16.2923L13 24.375L19.8567 16.2882C19.8924 16.2451 20.137 15.925 20.137 15.925L20.1378 15.9226C21.3081 14.3809 21.9403 12.498 21.9375 10.5625C21.9347 8.19299 20.9922 5.92132 19.3167 4.24582C17.6412 2.57032 15.3695 1.6278 13 1.625V1.625ZM13 13.8125C12.3572 13.8125 11.7289 13.6219 11.1944 13.2648C10.6599 12.9077 10.2434 12.4001 9.9974 11.8062C9.75142 11.2124 9.68706 10.5589 9.81246 9.92846C9.93786 9.29802 10.2474 8.71892 10.7019 8.2644C11.1564 7.80988 11.7355 7.50035 12.366 7.37495C12.9964 7.24955 13.6499 7.31391 14.2437 7.55989C14.8376 7.80588 15.3452 8.22244 15.7023 8.7569C16.0594 9.29136 16.25 9.91971 16.25 10.5625C16.2489 11.4241 15.9062 12.2501 15.2969 12.8594C14.6877 13.4687 13.8616 13.8114 13 13.8125V13.8125Z" fill="#CBCBCB"/>
@@ -76,6 +76,7 @@
                 <v-date-picker
                     v-model="departureDate"
                     mode="date"
+                    :min-date="new Date()"
                     :popover="{ placement: $screens({ default: 'right' }) }">
                     <template v-slot="{ inputValue, inputEvents }">
                         <input
@@ -101,8 +102,8 @@
                     <input type="number" min="1" v-model="nbOfPassengers">
                 </div>
                 <div class="d-flex align-items-center">
-                    <i class="fa fa-minus me-3" @click="nbOfPassengers > 1 ? nbOfPassengers-- : nbOfPassengers"></i>
-                    <i class="fa fa-plus" @click="nbOfPassengers++"></i>
+                    <i class="fa fa-minus me-3 cursor-pointer" @click="nbOfPassengers > 1 ? nbOfPassengers-- : nbOfPassengers"></i>
+                    <i class="fa fa-plus cursor-pointer" @click="nbOfPassengers++"></i>
                 </div>
             </div>
         </div>

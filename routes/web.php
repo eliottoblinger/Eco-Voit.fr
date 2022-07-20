@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\TripController;
+use App\Http\Controllers\UserController;
 use App\Models\Trip;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -19,47 +21,12 @@ Route::get('/', function () {
     return view('home');
 });
 
-Route::get('/trips', function (Request $request) {
+//Trips Routes
+Route::get('/trips', [TripController::class, 'index']);
+Route::get('/trips/{unique_key}', [TripController::class, 'show']);
+Route::get('/add-trip', [TripController::class, 'create']);
 
-    $departureCity = $request->query('departure');
-
-    $arrivalCity = $request->query('arrival');
-
-    $departureDate = $request->query('date');
-
-    $numberOfSeats = $request->query('seats');
-
-    $cheaperTrip = Trip::where('departure_city', 'like', '%'.$departureCity.'%')
-        ->where('arrival_city', 'like', '%'.$arrivalCity.'%')
-        ->where('departure_date', '>=', $departureDate)
-        ->where('number_of_seats', '>=', $numberOfSeats)
-        ->orderBy('price')
-        ->first();
-
-    $fasterTrip = Trip::where('departure_city', 'like', '%'.$departureCity.'%')
-        ->where('arrival_city', 'like', '%'.$arrivalCity.'%')
-        ->where('departure_date', '>=', $departureDate)
-        ->where('number_of_seats', '>=', $numberOfSeats)
-        ->orderByRaw('(arrival_date - departure_date) asc')
-        ->first();
-
-    $trips = Trip::where('departure_city', 'like', '%'.$departureCity.'%')
-        ->where('arrival_city', 'like', '%'.$arrivalCity.'%')
-        ->where('departure_date', '>=', $departureDate)
-        ->where('number_of_seats', '>=', $numberOfSeats)
-        ->where('id', '!=', $cheaperTrip->id)
-        ->where('id', '!=', $fasterTrip->id)
-        ->orderBy('departure_date')
-        ->get();
-
-    return view('trips.index', ['cheaperTrip' => $cheaperTrip, 'fasterTrip' => $fasterTrip, 'trips' => $trips]);
-});
-
-Route::get('/trips/{unique_key}', function ($uniqueKey) {
-
-    $trip = Trip::where('unique_key', $uniqueKey)->first();
-
-    return view('trips.show', ['trip' => $trip]);
-});
-
-Route::get('/register', function () { return view('auth.register'); })->name("auth.register");
+//Auth Routes
+Route::get('/register', function () { return view('auth.register'); })->name('auth.register');
+Route::post('/register', [UserController::class, 'store']);
+Route::get('/login', function () { return view('auth.login'); })->name('auth.login');

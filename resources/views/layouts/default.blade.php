@@ -11,7 +11,7 @@
 
 <div id="app">
     @if(!Route::is('auth.*'))
-        <app-header></app-header>
+        <app-header :user="{{ json_encode(auth()->user(), null) }}"></app-header>
     @endif
     @yield('content')
     @if(!Route::is('auth.*'))

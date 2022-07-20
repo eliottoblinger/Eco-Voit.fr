@@ -10,7 +10,7 @@
                 <input class="input-auth-app fs-5 me-3 w-100" type="text" placeholder="Nom" v-model="name">
             </div>
             <div class="col-6">
-                <input class="input-auth-app fs-5 w-100" type="text" placeholder="Prénom" v-model="firstName">
+                <input class="input-auth-app fs-5 w-100" type="text" placeholder="Prénom" v-model="surname">
             </div>
         </div>
         <div class="row my-3 w-100">
@@ -38,10 +38,15 @@
 
         <div class="row my-3 w-100">
             <div class="col-12">
+                <span class="fs-sm text-muted">
+                    Date de naissance
+                </span>
                 <v-date-picker
                     v-model="birthDate"
                     mode="date"
                     :popover="{ placement: $screens({ default: 'left' }) }"
+                    :max-date="(new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10)"
+                    min-date="1950-01-01"
                     is24hr>
                     <template v-slot="{ inputValue, inputEvents }">
                         <input
@@ -56,7 +61,11 @@
 
         <div class="row my-3 w-100">
             <div class="col-12 d-grid">
-                <button type="button" class="btn btn-lg d-flex justify-content-center align-items-center btn-block bg-green-app text-white" style="height: 30px;" @click="submit">Rejoindre</button>
+                <button type="button" :class="[isFormValid ? '' : 'disabled', 'btn btn-lg d-flex justify-content-center align-items-center btn-block bg-green-app text-white shadow-none']" style="height: 30px;"
+                        @click="submit"
+                >
+                    Rejoindre
+                </button>
             </div>
             <div class="col-12 d-grid">
                 <a class="link-register-app mt-1" href="">Se connecter à un compte existant</a>
@@ -81,7 +90,7 @@ export default {
         return {
             birthDate: new Date("10/23/1999"),
             name: "",
-            firstName: "",
+            surname: "",
             email: "",
             password: "",
             confirmPassword: "",
@@ -89,9 +98,33 @@ export default {
             statusPassword: 2
         }
     },
-    methods: {
-        submit: function () {
+    computed: {
+        isFormValid: function () {
+            return this.name.trim() !== '' &&
+                this.surname.trim() !== '' &&
+                this.email.trim() !== '' &&
+                this.regex.test(this.password) &&
+                this.password === this.confirmPassword;
 
+        }
+    },
+    methods: {
+        submit: async function () {
+            if(this.isFormValid){
+                const user = {
+                    name: this.name,
+                    surname: this.surname,
+                    email: this.email,
+                    password: this.password,
+                    birthDate: this.birthDate
+                }
+
+                await this.axios.post('/register', {
+                    user: user
+                });
+
+                location.href = '/login';
+            }
         }
     },
     watch: {
@@ -103,7 +136,6 @@ export default {
             }else{
                 this.statusPassword = 2
             }
-            console.log(value)
         }
     }
 }

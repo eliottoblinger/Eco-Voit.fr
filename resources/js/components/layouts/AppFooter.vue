@@ -4,7 +4,7 @@
             <section class="p-3">
                 <div class="row d-flex align-items-center">
                     <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-                        <h2>Eco-Voit.fr</h2>
+                        <h2 class="fw-bold">Eco-Voit</h2>
                     </div>
 
                     <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
