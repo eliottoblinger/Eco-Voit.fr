@@ -1,15 +1,15 @@
 <template>
-    <div class="d-flex flex-column align-items-center justify-content-center py-5 mx-3 px-5" style="height: 75vh; min-width: 30vw">
+    <div class="d-flex flex-column align-items-center justify-content-center py-5 mx-3 px-5" style="height: 75vh; min-width: 30vw; max-width: 80vw">
         <div class="row mb-5">
             <div class="col-12">
                 <h1 class="border-bottom pb-1 pb-lg-3 border-dark fs-2">Inscription</h1>
             </div>
         </div>
         <div class="row my-3 w-100">
-            <div class="col-6">
+            <div class="col-12 col-md-6">
                 <input class="input-auth-app fs-5 me-3 w-100" type="text" placeholder="Nom" v-model="name">
             </div>
-            <div class="col-6">
+            <div class="col-12 col-md-6 mt-4 mt-md-0">
                 <input class="input-auth-app fs-5 w-100" type="text" placeholder="Prénom" v-model="surname">
             </div>
         </div>
@@ -68,7 +68,7 @@
                 </button>
             </div>
             <div class="col-12 d-grid">
-                <a class="link-register-app mt-1" href="">Se connecter à un compte existant</a>
+                <a class="link-register-app mt-1" href="/login">Se connecter à un compte existant</a>
             </div>
         </div>
     </div>
