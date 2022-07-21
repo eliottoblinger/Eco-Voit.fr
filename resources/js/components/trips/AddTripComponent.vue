@@ -20,21 +20,33 @@
         <div class="w-75 mx-auto">
             <div v-if="step === 1">
                 <h3 class="fs-2 fw-bold my-3">Quelle est l'adresse de départ ?</h3>
-                <div class="d-flex bg-white shadow-lg rounded-pill my-5 py-3">
+                <div class="d-flex bg-white shadow-lg rounded-pill my-5 py-3 position-relative">
                     <svg class="mx-3" width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M13 1.625C10.6305 1.6278 8.35883 2.57032 6.68333 4.24582C5.00783 5.92132 4.0653 8.19299 4.06251 10.5625C4.05967 12.4989 4.69218 14.3827 5.86301 15.925C5.86301 15.925 6.10676 16.2459 6.14657 16.2923L13 24.375L19.8567 16.2882C19.8924 16.2451 20.137 15.925 20.137 15.925L20.1378 15.9226C21.3081 14.3809 21.9403 12.498 21.9375 10.5625C21.9347 8.19299 20.9922 5.92132 19.3167 4.24582C17.6412 2.57032 15.3695 1.6278 13 1.625V1.625ZM13 13.8125C12.3572 13.8125 11.7289 13.6219 11.1944 13.2648C10.6599 12.9077 10.2434 12.4001 9.9974 11.8062C9.75142 11.2124 9.68706 10.5589 9.81246 9.92846C9.93786 9.29802 10.2474 8.71892 10.7019 8.2644C11.1564 7.80988 11.7355 7.50035 12.366 7.37495C12.9964 7.24955 13.6499 7.31391 14.2437 7.55989C14.8376 7.80588 15.3452 8.22244 15.7023 8.7569C16.0594 9.29136 16.25 9.91971 16.25 10.5625C16.2489 11.4241 15.9062 12.2501 15.2969 12.8594C14.6877 13.4687 13.8616 13.8114 13 13.8125V13.8125Z" fill="#CBCBCB"/>
                     </svg>
-                    <input type="text" class="w-100" placeholder="Marseille, Paris, Strasbourg..." v-model="departure">
+                    <input type="text" class="w-100" placeholder="Marseille, Paris, Strasbourg..." v-model="departure" @input="searchDepartures">
+                    <div v-if="departures.length" class="position-absolute bg-white top-100 mt-4 d-flex flex-column w-50" style="max-height: 250px; width: 95%; overflow: auto;">
+                        <span v-for="depart of departures" class="fs-5 fw-bold cursor-pointer p-3 result"
+                              @click="selectDeparture(depart.properties)">
+                            {{ depart.properties.label }}
+                        </span>
+                    </div>
                 </div>
             </div>
 
             <div v-if="step === 2">
                 <h3 class="fs-2 fw-bold my-3">Quelle est l'adresse d'arrivée ?</h3>
-                <div class="d-flex bg-white shadow-lg rounded-pill my-5 py-3">
+                <div class="d-flex bg-white shadow-lg rounded-pill my-5 py-3 position-relative">
                     <svg class="mx-3" width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M13 1.625C10.6305 1.6278 8.35883 2.57032 6.68333 4.24582C5.00783 5.92132 4.0653 8.19299 4.06251 10.5625C4.05967 12.4989 4.69218 14.3827 5.86301 15.925C5.86301 15.925 6.10676 16.2459 6.14657 16.2923L13 24.375L19.8567 16.2882C19.8924 16.2451 20.137 15.925 20.137 15.925L20.1378 15.9226C21.3081 14.3809 21.9403 12.498 21.9375 10.5625C21.9347 8.19299 20.9922 5.92132 19.3167 4.24582C17.6412 2.57032 15.3695 1.6278 13 1.625V1.625ZM13 13.8125C12.3572 13.8125 11.7289 13.6219 11.1944 13.2648C10.6599 12.9077 10.2434 12.4001 9.9974 11.8062C9.75142 11.2124 9.68706 10.5589 9.81246 9.92846C9.93786 9.29802 10.2474 8.71892 10.7019 8.2644C11.1564 7.80988 11.7355 7.50035 12.366 7.37495C12.9964 7.24955 13.6499 7.31391 14.2437 7.55989C14.8376 7.80588 15.3452 8.22244 15.7023 8.7569C16.0594 9.29136 16.25 9.91971 16.25 10.5625C16.2489 11.4241 15.9062 12.2501 15.2969 12.8594C14.6877 13.4687 13.8616 13.8114 13 13.8125V13.8125Z" fill="#CBCBCB"/>
                     </svg>
-                    <input type="text" class="w-100" placeholder="Marseille, Paris, Strasbourg..." v-model="arrival">
+                    <input type="text" class="w-100" placeholder="Marseille, Paris, Strasbourg..." v-model="arrival" @input="searchArrivals">
+                    <div v-if="arrivals.length" class="position-absolute bg-white top-100 mt-4 d-flex flex-column w-50" style="max-height: 250px; width: 95%; overflow: auto;">
+                        <span v-for="arriv of arrivals" class="fs-5 fw-bold cursor-pointer p-3 result"
+                              @click="selectArrival(arriv.properties)">
+                            {{ arriv.properties.label }}
+                        </span>
+                    </div>
                 </div>
             </div>
 
@@ -80,7 +92,7 @@
                     </div>
                     <div class="d-flex align-items-center me-3">
                         <i class="fa fa-minus me-3 cursor-pointer" @click="nbOfPassengers > 1 ? nbOfPassengers-- : nbOfPassengers"></i>
-                        <i class="fa fa-plus cursor-pointer" @click="nbOfPassengers++"></i>
+                        <i class="fa fa-plus cursor-pointer" @click="nbOfPassengers > 7 ? nbOfPassengers : nbOfPassengers++"></i>
                     </div>
                 </div>
             </div>
@@ -109,7 +121,8 @@
                 <button v-if="step > 1" class="btn btn-lg btn-outline-secondary text-center fw-bold rounded shadow-lg mt-3 me-3" style="width: 125px;" @click="step--">
                     Précedent
                 </button>
-                <button v-if="step < 5" class="btn btn-lg bg-green-app text-white text-center fw-bold rounded shadow-lg mt-3" style="width: 125px;" @click="step++">
+                <button v-if="step < 5"
+                        :class="[nextBtnDisabled ? 'disabled' : '', 'btn btn-lg bg-green-app text-white text-center fw-bold rounded shadow-lg mt-3']" style="width: 125px;" @click="step++">
                     Suivant
                 </button>
                 <button v-if="step === 5" class="btn btn-lg bg-green-app text-white text-center fw-bold rounded shadow-lg mt-3" style="width: 125px;" @click="step++">
@@ -127,14 +140,76 @@ export default {
         return {
             departure: '',
             arrival: '',
+            departures: [],
+            arrivals: [],
+            departureCity: '',
+            departureZipCode: '',
+            departureAddress: '',
+            arrivalCity: '',
+            arrivalZipCode: '',
+            arrivalAddress: '',
             departureDate: new Date(),
             step: 1,
             nbOfPassengers: 1,
             price: 7.50
         }
     },
-    created(){
-        console.log('test')
+    computed: {
+        nextBtnDisabled(){
+            return (this.step === 1 && this.departureCity.trim() === '') || (this.step === 2 && this.arrivalCity.trim() === '');
+        }
+    },
+    methods: {
+        selectDeparture(departure){
+            const depart = Object.assign({}, departure)
+
+            this.departureCity = depart.city;
+            this.departureZipCode = depart.postcode;
+            this.departureAddress = depart.street;
+
+            this.departure = depart.label;
+
+            this.departures = [];
+        },
+        async searchDepartures(){
+            this.departureCity = '';
+            this.departureZipCode = '';
+            this.departureAddress = '';
+
+            const { data } = await axios.get('https://api-adresse.data.gouv.fr/search/', {
+                params: {
+                    q: this.departure,
+                    limit: 25
+                }
+            });
+
+            this.departures = data.features;
+        },
+        selectArrival(arriv){
+            const arrival = Object.assign({}, arriv)
+
+            this.arrivalCity = arrival.city;
+            this.arrivalZipCode = arrival.postcode;
+            this.arrivalAddress = arrival.street;
+
+            this.arrival = arriv.label;
+
+            this.arrivals = [];
+        },
+        async searchArrivals(){
+            this.arrivalCity = '';
+            this.arrivalZipCode = '';
+            this.arrivalAddress = '';
+
+            const { data } = await axios.get('https://api-adresse.data.gouv.fr/search/', {
+                params: {
+                    q: this.arrival,
+                    limit: 25
+                }
+            });
+
+            this.arrivals = data.features;
+        }
     }
 }
 </script>

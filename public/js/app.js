@@ -23856,6 +23856,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "SearchingBarComponent",
   data: function data() {
@@ -23863,7 +23871,9 @@ __webpack_require__.r(__webpack_exports__);
       departureCity: '',
       arrivalCity: '',
       departureDate: new Date(),
-      nbOfPassengers: 1
+      nbOfPassengers: 1,
+      departureCities: [],
+      arrivalCities: []
     };
   },
   methods: {
@@ -23876,6 +23886,71 @@ __webpack_require__.r(__webpack_exports__);
         url.searchParams.set('seats', this.nbOfPassengers);
         window.location = url;
       }
+    },
+    selectCity: function selectCity(type, city) {
+      if (type === 'departure') {
+        this.departureCity = city;
+        this.departureCities = [];
+      } else {
+        this.arrivalCity = city;
+        this.arrivalCities = [];
+      }
+    },
+    searchCity: function searchCity(type) {
+      var _this = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+        var city, _yield$axios$get, data, results;
+
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                if (type === 'departure') {
+                  city = _this.departureCity;
+                } else {
+                  city = _this.arrivalCity;
+                }
+
+                if (!city.trim().length) {
+                  _context.next = 10;
+                  break;
+                }
+
+                _context.next = 4;
+                return axios.get('https://api-adresse.data.gouv.fr/search/', {
+                  params: {
+                    q: city,
+                    limit: 15,
+                    type: 'municipality'
+                  }
+                });
+
+              case 4:
+                _yield$axios$get = _context.sent;
+                data = _yield$axios$get.data;
+                results = data.features;
+
+                if (type === 'departure') {
+                  _this.departureCities = results;
+                } else {
+                  _this.arrivalCities = results;
+                }
+
+                _context.next = 12;
+                break;
+
+              case 10:
+                _this.departureCities = [];
+                _this.arrivalCities = [];
+
+              case 12:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
     }
   }
 });
@@ -23893,20 +23968,124 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "AddTripComponent",
   data: function data() {
     return {
       departure: '',
       arrival: '',
+      departures: [],
+      arrivals: [],
+      departureCity: '',
+      departureZipCode: '',
+      departureAddress: '',
+      arrivalCity: '',
+      arrivalZipCode: '',
+      arrivalAddress: '',
       departureDate: new Date(),
       step: 1,
       nbOfPassengers: 1,
       price: 7.50
     };
   },
-  created: function created() {
-    console.log('test');
+  computed: {
+    nextBtnDisabled: function nextBtnDisabled() {
+      return this.step === 1 && this.departureCity.trim() === '' || this.step === 2 && this.arrivalCity.trim() === '';
+    }
+  },
+  methods: {
+    selectDeparture: function selectDeparture(departure) {
+      var depart = Object.assign({}, departure);
+      this.departureCity = depart.city;
+      this.departureZipCode = depart.postcode;
+      this.departureAddress = depart.street;
+      this.departure = depart.label;
+      this.departures = [];
+    },
+    searchDepartures: function searchDepartures() {
+      var _this = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+        var _yield$axios$get, data;
+
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _this.departureCity = '';
+                _this.departureZipCode = '';
+                _this.departureAddress = '';
+                _context.next = 5;
+                return axios.get('https://api-adresse.data.gouv.fr/search/', {
+                  params: {
+                    q: _this.departure,
+                    limit: 25
+                  }
+                });
+
+              case 5:
+                _yield$axios$get = _context.sent;
+                data = _yield$axios$get.data;
+                _this.departures = data.features;
+
+              case 8:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    },
+    selectArrival: function selectArrival(arriv) {
+      var arrival = Object.assign({}, arriv);
+      this.arrivalCity = arrival.city;
+      this.arrivalZipCode = arrival.postcode;
+      this.arrivalAddress = arrival.street;
+      this.arrival = arriv.label;
+      this.arrivals = [];
+    },
+    searchArrivals: function searchArrivals() {
+      var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+        var _yield$axios$get2, data;
+
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _this2.arrivalCity = '';
+                _this2.arrivalZipCode = '';
+                _this2.arrivalAddress = '';
+                _context2.next = 5;
+                return axios.get('https://api-adresse.data.gouv.fr/search/', {
+                  params: {
+                    q: _this2.arrival,
+                    limit: 25
+                  }
+                });
+
+              case 5:
+                _yield$axios$get2 = _context2.sent;
+                data = _yield$axios$get2.data;
+                _this2.arrivals = data.features;
+
+              case 8:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }))();
+    }
   }
 });
 
@@ -24755,7 +24934,7 @@ var _hoisted_2 = {
   style: {
     "width": "25%"
   },
-  "class": "my-3 px-3 d-flex align-items-center justify-content-start border-end"
+  "class": "my-3 px-3 d-flex align-items-center justify-content-start border-end position-relative"
 };
 
 var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("svg", {
@@ -24773,31 +24952,20 @@ var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 );
 
 var _hoisted_4 = {
+  key: 0,
+  "class": "position-absolute bg-white top-100 mt-4 d-flex flex-column",
   style: {
-    "width": "25%"
-  },
-  "class": "my-3 px-3 d-flex align-items-center justify-content-start border-end"
+    "max-height": "250px",
+    "width": "95%",
+    "overflow": "auto"
+  }
 };
-
-var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("svg", {
-  "class": "me-1",
-  width: "26",
-  height: "26",
-  viewBox: "0 0 26 26",
-  fill: "none",
-  xmlns: "http://www.w3.org/2000/svg"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("path", {
-  d: "M13 1.625C10.6305 1.6278 8.35883 2.57032 6.68333 4.24582C5.00783 5.92132 4.0653 8.19299 4.06251 10.5625C4.05967 12.4989 4.69218 14.3827 5.86301 15.925C5.86301 15.925 6.10676 16.2459 6.14657 16.2923L13 24.375L19.8567 16.2882C19.8924 16.2451 20.137 15.925 20.137 15.925L20.1378 15.9226C21.3081 14.3809 21.9403 12.498 21.9375 10.5625C21.9347 8.19299 20.9922 5.92132 19.3167 4.24582C17.6412 2.57032 15.3695 1.6278 13 1.625V1.625ZM13 13.8125C12.3572 13.8125 11.7289 13.6219 11.1944 13.2648C10.6599 12.9077 10.2434 12.4001 9.9974 11.8062C9.75142 11.2124 9.68706 10.5589 9.81246 9.92846C9.93786 9.29802 10.2474 8.71892 10.7019 8.2644C11.1564 7.80988 11.7355 7.50035 12.366 7.37495C12.9964 7.24955 13.6499 7.31391 14.2437 7.55989C14.8376 7.80588 15.3452 8.22244 15.7023 8.7569C16.0594 9.29136 16.25 9.91971 16.25 10.5625C16.2489 11.4241 15.9062 12.2501 15.2969 12.8594C14.6877 13.4687 13.8616 13.8114 13 13.8125V13.8125Z",
-  fill: "#CBCBCB"
-})], -1
-/* HOISTED */
-);
-
+var _hoisted_5 = ["onClick"];
 var _hoisted_6 = {
   style: {
     "width": "25%"
   },
-  "class": "my-3 px-3 d-flex align-items-center justify-content-start border-end"
+  "class": "my-3 px-3 d-flex align-items-center justify-content-start border-end position-relative"
 };
 
 var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("svg", {
@@ -24808,54 +24976,67 @@ var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
   fill: "none",
   xmlns: "http://www.w3.org/2000/svg"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("path", {
+  d: "M13 1.625C10.6305 1.6278 8.35883 2.57032 6.68333 4.24582C5.00783 5.92132 4.0653 8.19299 4.06251 10.5625C4.05967 12.4989 4.69218 14.3827 5.86301 15.925C5.86301 15.925 6.10676 16.2459 6.14657 16.2923L13 24.375L19.8567 16.2882C19.8924 16.2451 20.137 15.925 20.137 15.925L20.1378 15.9226C21.3081 14.3809 21.9403 12.498 21.9375 10.5625C21.9347 8.19299 20.9922 5.92132 19.3167 4.24582C17.6412 2.57032 15.3695 1.6278 13 1.625V1.625ZM13 13.8125C12.3572 13.8125 11.7289 13.6219 11.1944 13.2648C10.6599 12.9077 10.2434 12.4001 9.9974 11.8062C9.75142 11.2124 9.68706 10.5589 9.81246 9.92846C9.93786 9.29802 10.2474 8.71892 10.7019 8.2644C11.1564 7.80988 11.7355 7.50035 12.366 7.37495C12.9964 7.24955 13.6499 7.31391 14.2437 7.55989C14.8376 7.80588 15.3452 8.22244 15.7023 8.7569C16.0594 9.29136 16.25 9.91971 16.25 10.5625C16.2489 11.4241 15.9062 12.2501 15.2969 12.8594C14.6877 13.4687 13.8616 13.8114 13 13.8125V13.8125Z",
+  fill: "#CBCBCB"
+})], -1
+/* HOISTED */
+);
+
+var _hoisted_8 = {
+  key: 0,
+  "class": "position-absolute bg-white top-100 mt-4 d-flex flex-column",
+  style: {
+    "max-height": "250px",
+    "width": "95%",
+    "overflow": "auto"
+  }
+};
+var _hoisted_9 = ["onClick"];
+var _hoisted_10 = {
+  style: {
+    "width": "25%"
+  },
+  "class": "my-3 px-3 d-flex align-items-center justify-content-start border-end"
+};
+
+var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("svg", {
+  "class": "me-1",
+  width: "26",
+  height: "26",
+  viewBox: "0 0 26 26",
+  fill: "none",
+  xmlns: "http://www.w3.org/2000/svg"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("path", {
   d: "M9.75 10.8333V13H7.58333V10.8333H9.75ZM14.0833 10.8333V13H11.9167V10.8333H14.0833ZM18.4167 10.8333V13H16.25V10.8333H18.4167ZM20.5833 3.24999C21.158 3.24999 21.7091 3.47827 22.1154 3.8846C22.5217 4.29093 22.75 4.84203 22.75 5.41666V20.5833C22.75 21.158 22.5217 21.7091 22.1154 22.1154C21.7091 22.5217 21.158 22.75 20.5833 22.75H5.41667C4.84203 22.75 4.29093 22.5217 3.8846 22.1154C3.47827 21.7091 3.25 21.158 3.25 20.5833V5.41666C3.25 4.84203 3.47827 4.29093 3.8846 3.8846C4.29093 3.47827 4.84203 3.24999 5.41667 3.24999H6.5V1.08333H8.66667V3.24999H17.3333V1.08333H19.5V3.24999H20.5833ZM20.5833 20.5833V8.66666H5.41667V20.5833H20.5833ZM9.75 15.1667V17.3333H7.58333V15.1667H9.75ZM14.0833 15.1667V17.3333H11.9167V15.1667H14.0833ZM18.4167 15.1667V17.3333H16.25V15.1667H18.4167Z",
   fill: "#CBCBCB"
 })], -1
 /* HOISTED */
 );
 
-var _hoisted_8 = ["value"];
-var _hoisted_9 = {
+var _hoisted_12 = ["value"];
+var _hoisted_13 = {
   style: {
     "width": "15%"
   },
   "class": "px-3 d-flex align-items-center justify-content-between border-end position-relative"
 };
-var _hoisted_10 = {
+var _hoisted_14 = {
   "class": "d-flex"
 };
 
-var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<svg class=\"me-1\" width=\"23\" height=\"23\" viewBox=\"0 0 23 23\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><g clip-path=\"url(#clip0_27_134)\"><path d=\"M11.5 7.55745e-06C10.7848 -0.0170939 10.0735 0.108994 9.40778 0.370854C8.74208 0.632713 8.13546 1.02506 7.62362 1.52481C7.11178 2.02456 6.70505 2.62162 6.42735 3.28087C6.14965 3.94012 6.00659 4.64825 6.00659 5.36361C6.00659 6.07896 6.14965 6.78709 6.42735 7.44635C6.70505 8.1056 7.11178 8.70266 7.62362 9.20241C8.13546 9.70216 8.74208 10.0945 9.40778 10.3564C10.0735 10.6182 10.7848 10.7443 11.5 10.7272C12.2151 10.7443 12.9265 10.6182 13.5922 10.3564C14.2579 10.0945 14.8645 9.70216 15.3763 9.20241C15.8882 8.70266 16.2949 8.1056 16.5726 7.44635C16.8503 6.78709 16.9934 6.07896 16.9934 5.36361C16.9934 4.64825 16.8503 3.94012 16.5726 3.28087C16.2949 2.62162 15.8882 2.02456 15.3763 1.52481C14.8645 1.02506 14.2579 0.632713 13.5922 0.370854C12.9265 0.108994 12.2151 -0.0170939 11.5 7.55745e-06ZM8.43332 13.7908C7.00999 13.7908 5.64496 14.3562 4.63851 15.3627C3.63207 16.3691 3.06665 17.7341 3.06665 19.1575V22.9862H19.9333V19.1575C19.9333 17.7341 19.3679 16.3691 18.3615 15.3627C17.355 14.3562 15.99 13.7908 14.5666 13.7908H8.43332Z\" fill=\"#CBCBCB\"></path></g><defs><clipPath id=\"clip0_27_134\"><rect width=\"23\" height=\"23\" fill=\"white\"></rect></clipPath></defs></svg>", 1);
-
-var _hoisted_12 = {
-  "class": "d-flex align-items-center position-absolute end-0 me-3"
-};
-var _hoisted_13 = {
-  "class": "d-flex flex-column bg-white shadow-lg text-center rounded-3 mb-3 d-lg-none"
-};
-var _hoisted_14 = {
-  "class": "d-flex p-3"
-};
-
-var _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("svg", {
-  "class": "me-1",
-  width: "26",
-  height: "26",
-  viewBox: "0 0 26 26",
-  fill: "none",
-  xmlns: "http://www.w3.org/2000/svg"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("path", {
-  d: "M13 1.625C10.6305 1.6278 8.35883 2.57032 6.68333 4.24582C5.00783 5.92132 4.0653 8.19299 4.06251 10.5625C4.05967 12.4989 4.69218 14.3827 5.86301 15.925C5.86301 15.925 6.10676 16.2459 6.14657 16.2923L13 24.375L19.8567 16.2882C19.8924 16.2451 20.137 15.925 20.137 15.925L20.1378 15.9226C21.3081 14.3809 21.9403 12.498 21.9375 10.5625C21.9347 8.19299 20.9922 5.92132 19.3167 4.24582C17.6412 2.57032 15.3695 1.6278 13 1.625V1.625ZM13 13.8125C12.3572 13.8125 11.7289 13.6219 11.1944 13.2648C10.6599 12.9077 10.2434 12.4001 9.9974 11.8062C9.75142 11.2124 9.68706 10.5589 9.81246 9.92846C9.93786 9.29802 10.2474 8.71892 10.7019 8.2644C11.1564 7.80988 11.7355 7.50035 12.366 7.37495C12.9964 7.24955 13.6499 7.31391 14.2437 7.55989C14.8376 7.80588 15.3452 8.22244 15.7023 8.7569C16.0594 9.29136 16.25 9.91971 16.25 10.5625C16.2489 11.4241 15.9062 12.2501 15.2969 12.8594C14.6877 13.4687 13.8616 13.8114 13 13.8125V13.8125Z",
-  fill: "#CBCBCB"
-})], -1
-/* HOISTED */
-);
+var _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<svg class=\"me-1\" width=\"23\" height=\"23\" viewBox=\"0 0 23 23\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><g clip-path=\"url(#clip0_27_134)\"><path d=\"M11.5 7.55745e-06C10.7848 -0.0170939 10.0735 0.108994 9.40778 0.370854C8.74208 0.632713 8.13546 1.02506 7.62362 1.52481C7.11178 2.02456 6.70505 2.62162 6.42735 3.28087C6.14965 3.94012 6.00659 4.64825 6.00659 5.36361C6.00659 6.07896 6.14965 6.78709 6.42735 7.44635C6.70505 8.1056 7.11178 8.70266 7.62362 9.20241C8.13546 9.70216 8.74208 10.0945 9.40778 10.3564C10.0735 10.6182 10.7848 10.7443 11.5 10.7272C12.2151 10.7443 12.9265 10.6182 13.5922 10.3564C14.2579 10.0945 14.8645 9.70216 15.3763 9.20241C15.8882 8.70266 16.2949 8.1056 16.5726 7.44635C16.8503 6.78709 16.9934 6.07896 16.9934 5.36361C16.9934 4.64825 16.8503 3.94012 16.5726 3.28087C16.2949 2.62162 15.8882 2.02456 15.3763 1.52481C14.8645 1.02506 14.2579 0.632713 13.5922 0.370854C12.9265 0.108994 12.2151 -0.0170939 11.5 7.55745e-06ZM8.43332 13.7908C7.00999 13.7908 5.64496 14.3562 4.63851 15.3627C3.63207 16.3691 3.06665 17.7341 3.06665 19.1575V22.9862H19.9333V19.1575C19.9333 17.7341 19.3679 16.3691 18.3615 15.3627C17.355 14.3562 15.99 13.7908 14.5666 13.7908H8.43332Z\" fill=\"#CBCBCB\"></path></g><defs><clipPath id=\"clip0_27_134\"><rect width=\"23\" height=\"23\" fill=\"white\"></rect></clipPath></defs></svg>", 1);
 
 var _hoisted_16 = {
+  "class": "d-flex align-items-center position-absolute end-0 me-3"
+};
+var _hoisted_17 = {
+  "class": "d-flex flex-column bg-white shadow-lg text-center rounded-3 mb-3 d-lg-none"
+};
+var _hoisted_18 = {
   "class": "d-flex p-3"
 };
 
-var _hoisted_17 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("svg", {
+var _hoisted_19 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("svg", {
   "class": "me-1",
   width: "26",
   height: "26",
@@ -24869,14 +25050,32 @@ var _hoisted_17 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 /* HOISTED */
 );
 
-var _hoisted_18 = {
+var _hoisted_20 = {
+  "class": "d-flex p-3"
+};
+
+var _hoisted_21 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("svg", {
+  "class": "me-1",
+  width: "26",
+  height: "26",
+  viewBox: "0 0 26 26",
+  fill: "none",
+  xmlns: "http://www.w3.org/2000/svg"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("path", {
+  d: "M13 1.625C10.6305 1.6278 8.35883 2.57032 6.68333 4.24582C5.00783 5.92132 4.0653 8.19299 4.06251 10.5625C4.05967 12.4989 4.69218 14.3827 5.86301 15.925C5.86301 15.925 6.10676 16.2459 6.14657 16.2923L13 24.375L19.8567 16.2882C19.8924 16.2451 20.137 15.925 20.137 15.925L20.1378 15.9226C21.3081 14.3809 21.9403 12.498 21.9375 10.5625C21.9347 8.19299 20.9922 5.92132 19.3167 4.24582C17.6412 2.57032 15.3695 1.6278 13 1.625V1.625ZM13 13.8125C12.3572 13.8125 11.7289 13.6219 11.1944 13.2648C10.6599 12.9077 10.2434 12.4001 9.9974 11.8062C9.75142 11.2124 9.68706 10.5589 9.81246 9.92846C9.93786 9.29802 10.2474 8.71892 10.7019 8.2644C11.1564 7.80988 11.7355 7.50035 12.366 7.37495C12.9964 7.24955 13.6499 7.31391 14.2437 7.55989C14.8376 7.80588 15.3452 8.22244 15.7023 8.7569C16.0594 9.29136 16.25 9.91971 16.25 10.5625C16.2489 11.4241 15.9062 12.2501 15.2969 12.8594C14.6877 13.4687 13.8616 13.8114 13 13.8125V13.8125Z",
+  fill: "#CBCBCB"
+})], -1
+/* HOISTED */
+);
+
+var _hoisted_22 = {
   "class": "d-flex justify-content-between p-3 w-100"
 };
-var _hoisted_19 = {
+var _hoisted_23 = {
   "class": "d-flex"
 };
 
-var _hoisted_20 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("svg", {
+var _hoisted_24 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("svg", {
   "class": "me-1",
   width: "26",
   height: "26",
@@ -24890,17 +25089,17 @@ var _hoisted_20 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 /* HOISTED */
 );
 
-var _hoisted_21 = ["value"];
-var _hoisted_22 = {
+var _hoisted_25 = ["value"];
+var _hoisted_26 = {
   "class": "d-flex justify-content-between align-items-center"
 };
-var _hoisted_23 = {
+var _hoisted_27 = {
   "class": "me-3"
 };
 
-var _hoisted_24 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<svg class=\"me-1\" width=\"23\" height=\"23\" viewBox=\"0 0 23 23\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><g clip-path=\"url(#clip0_27_134)\"><path d=\"M11.5 7.55745e-06C10.7848 -0.0170939 10.0735 0.108994 9.40778 0.370854C8.74208 0.632713 8.13546 1.02506 7.62362 1.52481C7.11178 2.02456 6.70505 2.62162 6.42735 3.28087C6.14965 3.94012 6.00659 4.64825 6.00659 5.36361C6.00659 6.07896 6.14965 6.78709 6.42735 7.44635C6.70505 8.1056 7.11178 8.70266 7.62362 9.20241C8.13546 9.70216 8.74208 10.0945 9.40778 10.3564C10.0735 10.6182 10.7848 10.7443 11.5 10.7272C12.2151 10.7443 12.9265 10.6182 13.5922 10.3564C14.2579 10.0945 14.8645 9.70216 15.3763 9.20241C15.8882 8.70266 16.2949 8.1056 16.5726 7.44635C16.8503 6.78709 16.9934 6.07896 16.9934 5.36361C16.9934 4.64825 16.8503 3.94012 16.5726 3.28087C16.2949 2.62162 15.8882 2.02456 15.3763 1.52481C14.8645 1.02506 14.2579 0.632713 13.5922 0.370854C12.9265 0.108994 12.2151 -0.0170939 11.5 7.55745e-06ZM8.43332 13.7908C7.00999 13.7908 5.64496 14.3562 4.63851 15.3627C3.63207 16.3691 3.06665 17.7341 3.06665 19.1575V22.9862H19.9333V19.1575C19.9333 17.7341 19.3679 16.3691 18.3615 15.3627C17.355 14.3562 15.99 13.7908 14.5666 13.7908H8.43332Z\" fill=\"#CBCBCB\"></path></g><defs><clipPath id=\"clip0_27_134\"><rect width=\"23\" height=\"23\" fill=\"white\"></rect></clipPath></defs></svg>", 1);
+var _hoisted_28 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<svg class=\"me-1\" width=\"23\" height=\"23\" viewBox=\"0 0 23 23\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><g clip-path=\"url(#clip0_27_134)\"><path d=\"M11.5 7.55745e-06C10.7848 -0.0170939 10.0735 0.108994 9.40778 0.370854C8.74208 0.632713 8.13546 1.02506 7.62362 1.52481C7.11178 2.02456 6.70505 2.62162 6.42735 3.28087C6.14965 3.94012 6.00659 4.64825 6.00659 5.36361C6.00659 6.07896 6.14965 6.78709 6.42735 7.44635C6.70505 8.1056 7.11178 8.70266 7.62362 9.20241C8.13546 9.70216 8.74208 10.0945 9.40778 10.3564C10.0735 10.6182 10.7848 10.7443 11.5 10.7272C12.2151 10.7443 12.9265 10.6182 13.5922 10.3564C14.2579 10.0945 14.8645 9.70216 15.3763 9.20241C15.8882 8.70266 16.2949 8.1056 16.5726 7.44635C16.8503 6.78709 16.9934 6.07896 16.9934 5.36361C16.9934 4.64825 16.8503 3.94012 16.5726 3.28087C16.2949 2.62162 15.8882 2.02456 15.3763 1.52481C14.8645 1.02506 14.2579 0.632713 13.5922 0.370854C12.9265 0.108994 12.2151 -0.0170939 11.5 7.55745e-06ZM8.43332 13.7908C7.00999 13.7908 5.64496 14.3562 4.63851 15.3627C3.63207 16.3691 3.06665 17.7341 3.06665 19.1575V22.9862H19.9333V19.1575C19.9333 17.7341 19.3679 16.3691 18.3615 15.3627C17.355 14.3562 15.99 13.7908 14.5666 13.7908H8.43332Z\" fill=\"#CBCBCB\"></path></g><defs><clipPath id=\"clip0_27_134\"><rect width=\"23\" height=\"23\" fill=\"white\"></rect></clipPath></defs></svg>", 1);
 
-var _hoisted_25 = {
+var _hoisted_29 = {
   "class": "d-flex align-items-center"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
@@ -24909,22 +25108,52 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [_hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     type: "text",
     placeholder: "Départ",
+    "class": "w-100",
     "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
       return $data.departureCity = $event;
+    }),
+    onInput: _cache[1] || (_cache[1] = function ($event) {
+      return $options.searchCity('departure');
     })
-  }, null, 512
-  /* NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.departureCity]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [_hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  }, null, 544
+  /* HYDRATE_EVENTS, NEED_PATCH */
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.departureCity]]), $data.departureCities.length ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_4, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.departureCities, function (city) {
+    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", {
+      "class": "fs-5 fw-bold cursor-pointer p-3 result",
+      onClick: function onClick($event) {
+        return $options.selectCity('departure', city.properties.label);
+      }
+    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(city.properties.label), 9
+    /* TEXT, PROPS */
+    , _hoisted_5);
+  }), 256
+  /* UNKEYED_FRAGMENT */
+  ))])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [_hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     type: "text",
-    placeholder: "Destination",
-    "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
-      return $data.arrivalCity = $event;
-    })
-  }, null, 512
-  /* NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.arrivalCity]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [_hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_v_date_picker, {
-    modelValue: $data.departureDate,
+    placeholder: "Arrivée",
+    "class": "w-100",
     "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
+      return $data.arrivalCity = $event;
+    }),
+    onInput: _cache[3] || (_cache[3] = function ($event) {
+      return $options.searchCity('arrival');
+    })
+  }, null, 544
+  /* HYDRATE_EVENTS, NEED_PATCH */
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.arrivalCity]]), $data.arrivalCities.length ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_8, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.arrivalCities, function (city) {
+    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", {
+      "class": "fs-5 fw-bold cursor-pointer p-3 result",
+      onClick: function onClick($event) {
+        return $options.selectCity('arrival', city.properties.label);
+      }
+    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(city.properties.label), 9
+    /* TEXT, PROPS */
+    , _hoisted_9);
+  }), 256
+  /* UNKEYED_FRAGMENT */
+  ))])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [_hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_v_date_picker, {
+    modelValue: $data.departureDate,
+    "onUpdate:modelValue": _cache[4] || (_cache[4] = function ($event) {
       return $data.departureDate = $event;
     }),
     mode: "date",
@@ -24944,29 +25173,29 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         value: inputValue
       }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toHandlers)(inputEvents)), null, 16
       /* FULL_PROPS */
-      , _hoisted_8)];
+      , _hoisted_12)];
     }),
     _: 1
     /* STABLE */
 
   }, 8
   /* PROPS */
-  , ["modelValue", "popover", "min-date"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [_hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  , ["modelValue", "popover", "min-date"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [_hoisted_15, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     type: "number",
     min: "1",
-    "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
+    "onUpdate:modelValue": _cache[5] || (_cache[5] = function ($event) {
       return $data.nbOfPassengers = $event;
     })
   }, null, 512
   /* NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.nbOfPassengers]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.nbOfPassengers]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
     "class": "fa fa-minus me-3 cursor-pointer",
-    onClick: _cache[4] || (_cache[4] = function ($event) {
+    onClick: _cache[6] || (_cache[6] = function ($event) {
       return $data.nbOfPassengers > 1 ? $data.nbOfPassengers-- : $data.nbOfPassengers;
     })
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
     "class": "fa fa-plus cursor-pointer",
-    onClick: _cache[5] || (_cache[5] = function ($event) {
+    onClick: _cache[7] || (_cache[7] = function ($event) {
       return $data.nbOfPassengers++;
     })
   })])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
@@ -24976,28 +25205,28 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       "border-top-left-radius": "unset !important"
     },
     "class": "cursor-pointer px-5 fw-bold bg-green-app text-white rounded-pill d-flex align-items-center justify-content-center",
-    onClick: _cache[6] || (_cache[6] = function () {
+    onClick: _cache[8] || (_cache[8] = function () {
       return $options.searchTrip && $options.searchTrip.apply($options, arguments);
     })
-  }, " Rechercher ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [_hoisted_15, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  }, " Rechercher ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_17, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_18, [_hoisted_19, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     type: "text",
     placeholder: "Départ",
-    "onUpdate:modelValue": _cache[7] || (_cache[7] = function ($event) {
+    "onUpdate:modelValue": _cache[9] || (_cache[9] = function ($event) {
       return $data.departureCity = $event;
     })
   }, null, 512
   /* NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.departureCity]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, [_hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.departureCity]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_20, [_hoisted_21, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     type: "text",
     placeholder: "Destination",
-    "onUpdate:modelValue": _cache[8] || (_cache[8] = function ($event) {
+    "onUpdate:modelValue": _cache[10] || (_cache[10] = function ($event) {
       return $data.arrivalCity = $event;
     })
   }, null, 512
   /* NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.arrivalCity]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_18, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_19, [_hoisted_20, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_v_date_picker, {
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.arrivalCity]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_22, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_23, [_hoisted_24, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_v_date_picker, {
     modelValue: $data.departureDate,
-    "onUpdate:modelValue": _cache[9] || (_cache[9] = function ($event) {
+    "onUpdate:modelValue": _cache[11] || (_cache[11] = function ($event) {
       return $data.departureDate = $event;
     }),
     mode: "date",
@@ -25016,29 +25245,29 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         value: inputValue
       }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toHandlers)(inputEvents)), null, 16
       /* FULL_PROPS */
-      , _hoisted_21)];
+      , _hoisted_25)];
     }),
     _: 1
     /* STABLE */
 
   }, 8
   /* PROPS */
-  , ["modelValue", "min-date", "popover"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_22, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_23, [_hoisted_24, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  , ["modelValue", "min-date", "popover"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_26, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_27, [_hoisted_28, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     type: "number",
     min: "1",
-    "onUpdate:modelValue": _cache[10] || (_cache[10] = function ($event) {
+    "onUpdate:modelValue": _cache[12] || (_cache[12] = function ($event) {
       return $data.nbOfPassengers = $event;
     })
   }, null, 512
   /* NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.nbOfPassengers]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_25, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.nbOfPassengers]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_29, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
     "class": "fa fa-minus me-3 cursor-pointer",
-    onClick: _cache[11] || (_cache[11] = function ($event) {
+    onClick: _cache[13] || (_cache[13] = function ($event) {
       return $data.nbOfPassengers > 1 ? $data.nbOfPassengers-- : $data.nbOfPassengers;
     })
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
     "class": "fa fa-plus cursor-pointer",
-    onClick: _cache[12] || (_cache[12] = function ($event) {
+    onClick: _cache[14] || (_cache[14] = function ($event) {
       return $data.nbOfPassengers++;
     })
   })])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
@@ -25047,7 +25276,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       "border-top-left-radius": "unset !important",
       "border-top-right-radius": "unset !important"
     },
-    onClick: _cache[13] || (_cache[13] = function () {
+    onClick: _cache[15] || (_cache[15] = function () {
       return $options.searchTrip && $options.searchTrip.apply($options, arguments);
     })
   }, " Rechercher ")])], 64
@@ -25093,7 +25322,7 @@ var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 );
 
 var _hoisted_6 = {
-  "class": "d-flex bg-white shadow-lg rounded-pill my-5 py-3"
+  "class": "d-flex bg-white shadow-lg rounded-pill my-5 py-3 position-relative"
 };
 
 var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("svg", {
@@ -25111,20 +25340,30 @@ var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 );
 
 var _hoisted_8 = {
+  key: 0,
+  "class": "position-absolute bg-white top-100 mt-4 d-flex flex-column w-50",
+  style: {
+    "max-height": "250px",
+    "width": "95%",
+    "overflow": "auto"
+  }
+};
+var _hoisted_9 = ["onClick"];
+var _hoisted_10 = {
   key: 1
 };
 
-var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h3", {
+var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h3", {
   "class": "fs-2 fw-bold my-3"
 }, "Quelle est l'adresse d'arrivée ?", -1
 /* HOISTED */
 );
 
-var _hoisted_10 = {
-  "class": "d-flex bg-white shadow-lg rounded-pill my-5 py-3"
+var _hoisted_12 = {
+  "class": "d-flex bg-white shadow-lg rounded-pill my-5 py-3 position-relative"
 };
 
-var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("svg", {
+var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("svg", {
   "class": "mx-3",
   width: "26",
   height: "26",
@@ -25138,21 +25377,31 @@ var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 /* HOISTED */
 );
 
-var _hoisted_12 = {
+var _hoisted_14 = {
+  key: 0,
+  "class": "position-absolute bg-white top-100 mt-4 d-flex flex-column w-50",
+  style: {
+    "max-height": "250px",
+    "width": "95%",
+    "overflow": "auto"
+  }
+};
+var _hoisted_15 = ["onClick"];
+var _hoisted_16 = {
   key: 2
 };
 
-var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h3", {
+var _hoisted_17 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h3", {
   "class": "fs-2 fw-bold my-3"
 }, "Veuillez indiquer la date ainsi que l'heure du départ", -1
 /* HOISTED */
 );
 
-var _hoisted_14 = {
+var _hoisted_18 = {
   "class": "d-flex bg-white shadow-lg rounded-pill my-5 py-3"
 };
 
-var _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("svg", {
+var _hoisted_19 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("svg", {
   "class": "mx-3",
   width: "26",
   height: "26",
@@ -25166,40 +25415,40 @@ var _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 /* HOISTED */
 );
 
-var _hoisted_16 = ["value"];
-var _hoisted_17 = {
+var _hoisted_20 = ["value"];
+var _hoisted_21 = {
   key: 3
 };
 
-var _hoisted_18 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h3", {
+var _hoisted_22 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h3", {
   "class": "fs-2 fw-bold my-3"
 }, "Combien de place(s) souhaitez-vous mettre à disposition ?", -1
 /* HOISTED */
 );
 
-var _hoisted_19 = {
+var _hoisted_23 = {
   "class": "d-flex justify-content-between bg-white shadow-lg rounded-pill my-5 py-3"
 };
-var _hoisted_20 = {
+var _hoisted_24 = {
   "class": "d-flex"
 };
 
-var _hoisted_21 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<svg class=\"mx-3\" width=\"23\" height=\"23\" viewBox=\"0 0 23 23\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><g clip-path=\"url(#clip0_27_134)\"><path d=\"M11.5 7.55745e-06C10.7848 -0.0170939 10.0735 0.108994 9.40778 0.370854C8.74208 0.632713 8.13546 1.02506 7.62362 1.52481C7.11178 2.02456 6.70505 2.62162 6.42735 3.28087C6.14965 3.94012 6.00659 4.64825 6.00659 5.36361C6.00659 6.07896 6.14965 6.78709 6.42735 7.44635C6.70505 8.1056 7.11178 8.70266 7.62362 9.20241C8.13546 9.70216 8.74208 10.0945 9.40778 10.3564C10.0735 10.6182 10.7848 10.7443 11.5 10.7272C12.2151 10.7443 12.9265 10.6182 13.5922 10.3564C14.2579 10.0945 14.8645 9.70216 15.3763 9.20241C15.8882 8.70266 16.2949 8.1056 16.5726 7.44635C16.8503 6.78709 16.9934 6.07896 16.9934 5.36361C16.9934 4.64825 16.8503 3.94012 16.5726 3.28087C16.2949 2.62162 15.8882 2.02456 15.3763 1.52481C14.8645 1.02506 14.2579 0.632713 13.5922 0.370854C12.9265 0.108994 12.2151 -0.0170939 11.5 7.55745e-06ZM8.43332 13.7908C7.00999 13.7908 5.64496 14.3562 4.63851 15.3627C3.63207 16.3691 3.06665 17.7341 3.06665 19.1575V22.9862H19.9333V19.1575C19.9333 17.7341 19.3679 16.3691 18.3615 15.3627C17.355 14.3562 15.99 13.7908 14.5666 13.7908H8.43332Z\" fill=\"#CBCBCB\"></path></g><defs><clipPath id=\"clip0_27_134\"><rect width=\"23\" height=\"23\" fill=\"white\"></rect></clipPath></defs></svg>", 1);
+var _hoisted_25 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<svg class=\"mx-3\" width=\"23\" height=\"23\" viewBox=\"0 0 23 23\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\"><g clip-path=\"url(#clip0_27_134)\"><path d=\"M11.5 7.55745e-06C10.7848 -0.0170939 10.0735 0.108994 9.40778 0.370854C8.74208 0.632713 8.13546 1.02506 7.62362 1.52481C7.11178 2.02456 6.70505 2.62162 6.42735 3.28087C6.14965 3.94012 6.00659 4.64825 6.00659 5.36361C6.00659 6.07896 6.14965 6.78709 6.42735 7.44635C6.70505 8.1056 7.11178 8.70266 7.62362 9.20241C8.13546 9.70216 8.74208 10.0945 9.40778 10.3564C10.0735 10.6182 10.7848 10.7443 11.5 10.7272C12.2151 10.7443 12.9265 10.6182 13.5922 10.3564C14.2579 10.0945 14.8645 9.70216 15.3763 9.20241C15.8882 8.70266 16.2949 8.1056 16.5726 7.44635C16.8503 6.78709 16.9934 6.07896 16.9934 5.36361C16.9934 4.64825 16.8503 3.94012 16.5726 3.28087C16.2949 2.62162 15.8882 2.02456 15.3763 1.52481C14.8645 1.02506 14.2579 0.632713 13.5922 0.370854C12.9265 0.108994 12.2151 -0.0170939 11.5 7.55745e-06ZM8.43332 13.7908C7.00999 13.7908 5.64496 14.3562 4.63851 15.3627C3.63207 16.3691 3.06665 17.7341 3.06665 19.1575V22.9862H19.9333V19.1575C19.9333 17.7341 19.3679 16.3691 18.3615 15.3627C17.355 14.3562 15.99 13.7908 14.5666 13.7908H8.43332Z\" fill=\"#CBCBCB\"></path></g><defs><clipPath id=\"clip0_27_134\"><rect width=\"23\" height=\"23\" fill=\"white\"></rect></clipPath></defs></svg>", 1);
 
-var _hoisted_22 = {
+var _hoisted_26 = {
   "class": "d-flex align-items-center me-3"
 };
-var _hoisted_23 = {
+var _hoisted_27 = {
   key: 4
 };
 
-var _hoisted_24 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h3", {
+var _hoisted_28 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h3", {
   "class": "fs-2 fw-bold my-5"
 }, "Informations sur le trajet", -1
 /* HOISTED */
 );
 
-var _hoisted_25 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_29 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "my-3"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "for": "exampleFormControlTextarea1",
@@ -25212,24 +25461,24 @@ var _hoisted_25 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 /* HOISTED */
 );
 
-var _hoisted_26 = {
+var _hoisted_30 = {
   "class": "my-5"
 };
 
-var _hoisted_27 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+var _hoisted_31 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "class": "form-label fs-sm fw-bold"
 }, "Prix du trajet", -1
 /* HOISTED */
 );
 
-var _hoisted_28 = {
+var _hoisted_32 = {
   "class": "d-flex justify-content-between bg-white shadow-lg rounded-pill py-3"
 };
-var _hoisted_29 = {
+var _hoisted_33 = {
   "class": "d-flex"
 };
 
-var _hoisted_30 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("svg", {
+var _hoisted_34 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("svg", {
   "class": "mx-3",
   width: "26",
   height: "26",
@@ -25243,7 +25492,7 @@ var _hoisted_30 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 /* HOISTED */
 );
 
-var _hoisted_31 = {
+var _hoisted_35 = {
   "class": "d-flex justify-content-end my-3"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
@@ -25275,21 +25524,49 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     placeholder: "Marseille, Paris, Strasbourg...",
     "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
       return $data.departure = $event;
+    }),
+    onInput: _cache[1] || (_cache[1] = function () {
+      return $options.searchDepartures && $options.searchDepartures.apply($options, arguments);
     })
-  }, null, 512
-  /* NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.departure]])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.step === 2 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_8, [_hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [_hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  }, null, 544
+  /* HYDRATE_EVENTS, NEED_PATCH */
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.departure]]), $data.departures.length ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_8, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.departures, function (depart) {
+    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", {
+      "class": "fs-5 fw-bold cursor-pointer p-3 result",
+      onClick: function onClick($event) {
+        return $options.selectDeparture(depart.properties);
+      }
+    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(depart.properties.label), 9
+    /* TEXT, PROPS */
+    , _hoisted_9);
+  }), 256
+  /* UNKEYED_FRAGMENT */
+  ))])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.step === 2 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_10, [_hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [_hoisted_13, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     type: "text",
     "class": "w-100",
     placeholder: "Marseille, Paris, Strasbourg...",
-    "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
-      return $data.arrival = $event;
-    })
-  }, null, 512
-  /* NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.arrival]])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.step === 3 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_12, [_hoisted_13, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [_hoisted_15, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_v_date_picker, {
-    modelValue: $data.departureDate,
     "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
+      return $data.arrival = $event;
+    }),
+    onInput: _cache[3] || (_cache[3] = function () {
+      return $options.searchArrivals && $options.searchArrivals.apply($options, arguments);
+    })
+  }, null, 544
+  /* HYDRATE_EVENTS, NEED_PATCH */
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.arrival]]), $data.arrivals.length ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_14, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.arrivals, function (arriv) {
+    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", {
+      "class": "fs-5 fw-bold cursor-pointer p-3 result",
+      onClick: function onClick($event) {
+        return $options.selectArrival(arriv.properties);
+      }
+    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(arriv.properties.label), 9
+    /* TEXT, PROPS */
+    , _hoisted_15);
+  }), 256
+  /* UNKEYED_FRAGMENT */
+  ))])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.step === 3 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_16, [_hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_18, [_hoisted_19, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_v_date_picker, {
+    modelValue: $data.departureDate,
+    "onUpdate:modelValue": _cache[4] || (_cache[4] = function ($event) {
       return $data.departureDate = $event;
     }),
     mode: "datetime",
@@ -25309,66 +25586,68 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         value: inputValue
       }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toHandlers)(inputEvents)), null, 16
       /* FULL_PROPS */
-      , _hoisted_16)];
+      , _hoisted_20)];
     }),
     _: 1
     /* STABLE */
 
   }, 8
   /* PROPS */
-  , ["modelValue", "popover", "min-date"])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.step === 4 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_17, [_hoisted_18, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_19, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_20, [_hoisted_21, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  , ["modelValue", "popover", "min-date"])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.step === 4 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_21, [_hoisted_22, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_23, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_24, [_hoisted_25, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     type: "number",
     min: "1",
     max: "7",
-    "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
+    "onUpdate:modelValue": _cache[5] || (_cache[5] = function ($event) {
       return $data.nbOfPassengers = $event;
     })
   }, null, 512
   /* NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.nbOfPassengers]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_22, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.nbOfPassengers]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_26, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
     "class": "fa fa-minus me-3 cursor-pointer",
-    onClick: _cache[4] || (_cache[4] = function ($event) {
+    onClick: _cache[6] || (_cache[6] = function ($event) {
       return $data.nbOfPassengers > 1 ? $data.nbOfPassengers-- : $data.nbOfPassengers;
     })
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
     "class": "fa fa-plus cursor-pointer",
-    onClick: _cache[5] || (_cache[5] = function ($event) {
-      return $data.nbOfPassengers++;
+    onClick: _cache[7] || (_cache[7] = function ($event) {
+      return $data.nbOfPassengers > 7 ? $data.nbOfPassengers : $data.nbOfPassengers++;
     })
-  })])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.step === 5 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_23, [_hoisted_24, _hoisted_25, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_26, [_hoisted_27, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_28, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_29, [_hoisted_30, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  })])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.step === 5 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_27, [_hoisted_28, _hoisted_29, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_30, [_hoisted_31, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_32, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_33, [_hoisted_34, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     type: "number",
     min: "1",
-    "onUpdate:modelValue": _cache[6] || (_cache[6] = function ($event) {
+    "onUpdate:modelValue": _cache[8] || (_cache[8] = function ($event) {
       return $data.price = $event;
     }),
     step: "0.1"
   }, null, 512
   /* NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.price]])])])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_31, [$data.step > 1 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", {
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.price]])])])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_35, [$data.step > 1 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", {
     key: 0,
     "class": "btn btn-lg btn-outline-secondary text-center fw-bold rounded shadow-lg mt-3 me-3",
     style: {
       "width": "125px"
     },
-    onClick: _cache[7] || (_cache[7] = function ($event) {
+    onClick: _cache[9] || (_cache[9] = function ($event) {
       return $data.step--;
     })
   }, " Précedent ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.step < 5 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", {
     key: 1,
-    "class": "btn btn-lg bg-green-app text-white text-center fw-bold rounded shadow-lg mt-3",
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([$options.nextBtnDisabled ? 'disabled' : '', 'btn btn-lg bg-green-app text-white text-center fw-bold rounded shadow-lg mt-3']),
     style: {
       "width": "125px"
     },
-    onClick: _cache[8] || (_cache[8] = function ($event) {
+    onClick: _cache[10] || (_cache[10] = function ($event) {
       return $data.step++;
     })
-  }, " Suivant ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.step === 5 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", {
+  }, " Suivant ", 2
+  /* CLASS */
+  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.step === 5 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", {
     key: 2,
     "class": "btn btn-lg bg-green-app text-white text-center fw-bold rounded shadow-lg mt-3",
     style: {
       "width": "125px"
     },
-    onClick: _cache[9] || (_cache[9] = function ($event) {
+    onClick: _cache[11] || (_cache[11] = function ($event) {
       return $data.step++;
     })
   }, " Valider ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])]);

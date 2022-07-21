@@ -138,3 +138,7 @@ input[type="radio"]:checked::before { /* selected */
 .cursor-pointer:hover{
     cursor: pointer !important;
 }
+
+.result:hover{
+    background-color: #F5F5F5 !important;
+}

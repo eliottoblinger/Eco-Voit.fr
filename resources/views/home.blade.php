@@ -1,10 +1,14 @@
 @extends('layouts.default')
 
 @section('content')
-    <div class="bg-gray-light-app d-flex flex-column justify-content-center align-items-center mt-5 py-3" style="min-height: 50vh;">
-        <div class="d-flex flex-column align-items-center my-3">
-            <h2 class="fw-bold">Trouver votre prochaine destination</h2>
-            <p class="text-muted">Indiquer dans la barre ci-dessous votre itinéraire</p>
+    <div class="d-flex flex-column justify-content-center align-items-center mt-5 py-3"
+         style="min-height: 55vh; background-image: url('https://eco-voit-bucket.s3.eu-west-3.amazonaws.com/assets/home-image-3.jpg');
+                                  background-repeat: no-repeat;
+                                  background-size: cover;
+                                  background-position: bottom;">
+        <div class="d-flex flex-column align-items-center my-5">
+            <h2 class="fw-bold text-white">Trouver votre prochaine destination</h2>
+            <p class="text-white">Indiquer dans la barre ci-dessous votre itinéraire</p>
         </div>
         <searching-bar-component/>
     </div>
@@ -46,7 +50,7 @@
                 <h5 class="text-white fw-lighter mb-3">Ces destinations prisées ont beaucoup à offrir</h5>
             </div>
             <div class="d-flex justify-content-between mt-3">
-                <div class="bg-white shadow-sm rounded fw-bold text-green-app fs-5 p-3 d-flex align-items-center justify-content-between me-3" style="width:30%; height: 70px;">
+                <div class="bg-white shadow-sm rounded fw-bold text-green-app fs-5 p-3 d-flex align-items-center justify-content-between me-3" style="width:25%; height: 50px;">
                     <div class="d-flex flex-lg-row flex-column align-items-center">
                         <span class="me-0 me-lg-3">Paris</span>
                         <svg class="d-none d-lg-block" width="12" height="10" viewBox="0 0 12 10" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -61,7 +65,7 @@
                         </svg>
                     </div>
                 </div>
-                <div class="bg-white shadow-sm rounded fw-bold text-green-app fs-5 p-3 d-flex align-items-center justify-content-between me-3" style="width: 30%; height: 70px;">
+                <div class="bg-white shadow-sm rounded fw-bold text-green-app fs-5 p-3 d-flex align-items-center justify-content-between me-3" style="width:25%; height: 50px;">
                     <div class="d-flex flex-lg-row flex-column align-items-center">
                         <span class="me-0 me-lg-3">Paris</span>
                         <svg class="d-none d-lg-block" width="12" height="10" viewBox="0 0 12 10" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -76,7 +80,7 @@
                         </svg>
                     </div>
                 </div>
-                <div class="bg-white shadow-sm rounded fw-bold text-green-app fs-5 p-3 d-flex align-items-center justify-content-between" style="width: 30%; height: 70px;">
+                <div class="bg-white shadow-sm rounded fw-bold text-green-app fs-5 p-3 d-flex align-items-center justify-content-between" style="width:25%; height: 50px;">
                     <div class="d-flex flex-lg-row flex-column align-items-center">
                         <span class="me-0 me-lg-3">Paris</span>
                         <svg class="d-none d-lg-block" width="12" height="10" viewBox="0 0 12 10" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -97,7 +101,7 @@
     <div class="bg-white d-flex align-items-center py-3" style="min-height: 75vh;">
         <div class="d-flex flex-column flex-lg-row justify-content-evenly align-items-center mx-auto fs-5 w-75">
             <div class="w-50 d-flex justify-content-center align-items-center m-3">
-                Image ici
+                <img src="https://eco-voit-bucket.s3.eu-west-3.amazonaws.com/assets/home-image-1.png" />
             </div>
             <div class="w-50 m-3">
                 <h3 class="fw-bold mb-3">Faites des économies sur votre plein !</h3>
@@ -116,7 +120,9 @@
             </div>
         </div>
     </div>
-    <div class="bg-gray-light-app p-3">
+    <div class="p-3" style="background-image: url('https://eco-voit-bucket.s3.eu-west-3.amazonaws.com/assets/home-image-2.png');
+                            background-position: bottom;
+                            background-size: 125%">
         <div class="d-flex flex-column w-75 mx-auto py-3 my-3">
             <div class="d-flex flex-column">
                 <h3 class="fw-bold mb-3">Faites des économies sur votre plein !</h3>
