@@ -24,6 +24,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/user-trips', function() {
         return view('trips.user-trips', ['trips' => auth()->user()->trips]);
     });
+
+    Route::get('/account', function () { return view('account.index'); });
+    Route::get('/logout', [UserController::class, 'logout'])->name("auth.logout");
 });
 
 //Trips Routes
@@ -35,6 +38,4 @@ Route::get('/register', function () { return view('auth.register'); })->name('au
 Route::post('/register', [UserController::class, 'store']);
 Route::get('/login', function () { return view('auth.login'); })->name('auth.login');
 Route::post('/login', [UserController::class, 'authenticate']);
-Route::get('/logout', [UserController::class, 'logout'])->name("auth.logout");
-Route::get('/account', function () { return view('account.index'); });
 

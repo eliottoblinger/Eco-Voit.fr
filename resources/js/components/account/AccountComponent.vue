@@ -12,7 +12,7 @@
                 </svg>
 
                 <span class="fs-1 mt-4" v-if="user">
-                    {{ user.surname.charAt(0).toUpperCase() + user.surname.slice(1) }} {{ user.name.charAt(0).toUpperCase() + user.surname.slice(1) }}
+                    {{ user.surname.charAt(0).toUpperCase() + user.surname.slice(1) }} {{ user.name.charAt(0).toUpperCase() + user.name.slice(1) }}
                 </span>
             </div>
 
