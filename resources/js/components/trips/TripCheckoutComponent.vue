@@ -58,7 +58,7 @@
                     Empreinte carbone du trajet
                 </div>
                 <div class="fw-bold">
-                    {{ (0.19 * (trip.meters / 1000)).toFixed(2) }}
+                    {{ getCarbonFootPrint(trip.meters) }}
                 </div>
             </div>
             <div class="d-flex flex-column bg-white w-50 mx-auto my-3 p-3 rounded-3 shadow-md">
@@ -121,8 +121,9 @@ export default {
         ...mapGetters('TripsStore', [
             'getHours',
             'getHoursBetween',
-            'scToHours'
+            'scToHours',
+            'getCarbonFootPrint'
         ])
-    }
+    },
 }
 </script>

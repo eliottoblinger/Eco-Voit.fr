@@ -28,7 +28,7 @@ export const trips = {
                 }
                 state.isFiltering = false;
             }, 250)
-        }
+        },
     },
     actions: {
         async addTrip(context, payload){
@@ -77,6 +77,9 @@ export const trips = {
             }
 
             return `${('0' + diffHrs).slice(-2)}:${('0' + diffMins).slice(-2)}`;
+        },
+        getCarbonFootPrint: (state) => (meters) => {
+            return (0.19 * (meters / 1000)).toFixed(2)
         },
         scToHours: () => (seconds) => {
             const h = Math.floor(seconds / (60 * 60));
