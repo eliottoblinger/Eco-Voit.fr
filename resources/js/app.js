@@ -24,7 +24,11 @@ import FiltersComponent from "./components/tools/FiltersComponent";
 import RegisterComponent from "./components/auth/RegisterComponent";
 import AddTripComponent from "./components/trips/AddTripComponent";
 import LoginComponent from "./components/auth/LoginComponent";
+<<<<<<< HEAD
 import UserTripsComponent from "./components/trips/UserTripsComponent";
+=======
+import AccountComponent from "./components/account/AccountComponent";
+>>>>>>> origin/FaycalBranch
 
 const app = createApp({});
 
@@ -38,7 +42,11 @@ app.component('filters-component', FiltersComponent);
 app.component('register-component', RegisterComponent);
 app.component('add-trip-component', AddTripComponent);
 app.component('login-component', LoginComponent);
+<<<<<<< HEAD
 app.component('user-trips-component', UserTripsComponent);
+=======
+app.component('account-component', AccountComponent);
+>>>>>>> origin/FaycalBranch
 app.component(Skeletor.name, Skeletor);
 
 app.use(VCalendar);

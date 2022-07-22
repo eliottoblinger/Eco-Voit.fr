@@ -28,10 +28,13 @@
                             {{ user.surname }} {{ user.name }}
                         </span>
                     </a>
-                    <ul class="dropdown-menu position-absolute" aria-labelledby="navbarDropdown">
+                    <ul class="dropdown-menu position-absolute" style="width: 10vw" aria-labelledby="navbarDropdown">
                         <div v-if="user">
                             <li><a class="dropdown-item" href="/account">Mon compte</a></li>
+<<<<<<< HEAD
                             <li><a class="dropdown-item" href="/user-trips">Mes trajets</a></li>
+=======
+>>>>>>> origin/FaycalBranch
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item p-3 fw-bold" href="/logout">Déconnexion</a></li>
                         </div>

@@ -1,23 +1,23 @@
 <template>
-    <div class="d-flex flex-column align-items-center justify-content-md-evenly py-5 mx-3 px-5" style="height: 75vh; min-width: 30vw; max-width: 50vw">
+    <div class="d-flex flex-column align-items-center justify-content-evenly py-5 mx-3 px-lg-5" style="height: 75vh; min-width: 30vw; max-width: 80vw">
         <div>
             <div>
-                <h1 style=" padding-bottom: 1px; background: linear-gradient(to right, black, black); background-repeat: no-repeat; background-size: 50px 2px; background-position: 50% 100%; text-align: center" class="pb-1 pb-lg-3 mb-0 fs-2 text-center">Connexion</h1>
+                <h1 style=" padding-bottom: 1px; background: linear-gradient(to right, black, black); background-repeat: no-repeat; background-size: 50px 2px; background-position: 50% 100%; text-align: center" class="pb-1 pb-lg-3 fs-2 text-center">Connexion</h1>
             </div>
             <div>
-                <h5 class="mt-3 ">Utiliser votre compte Eco-Voit</h5>
+                <h5 class="mt-lg-3 mt-4">Utiliser votre compte Eco-Voit</h5>
             </div>
         </div>
 
-        <div class="my-3 w-75">
-            <div class="row my-3 w-100">
+        <div class="my-3 w-75 mt-5 mt-md-0">
+            <div class="row my-3 w-100 ">
                 <div class="col-12">
                     <input class="input-auth-app fs-5 me-3 w-100"  type="text" placeholder="Votre email" v-model="email">
                 </div>
             </div>
 
             <div class="row my-3 w-100">
-                <div class="col-12">
+                <div class="col-12 mt-3">
                     <input @keyup.enter="submit" :class="[statusPassword === 2 ? 'input-auth-app' : (statusPassword === 0 ? 'input-auth-error-app' : 'input-auth-success-app'), 'fs-5 w-100']" type="password" placeholder="Mot de passe" v-model="password">
                     <svg data-bs-toggle="tooltip" title="" data-bs-placement="bottom"
                          :data-bs-original-title="[statusPassword === 1 ? 'Votre mot de passe est valide.' : 'Votre mot de passe doit comporter au moins 8 caractères dont un chiffre, une lettre minuscule et un caractère spécial.']"
@@ -43,26 +43,24 @@
                 </div>
             </div>
 
-            <div class="row my-3 w-100">
-                <div class="col-6">
+            <div class="row my-3 w-100 ">
+                <div class="col-md-6 col-sm-12 d-none d-lg-block">
                     <input type="checkbox" id="checkbox" v-model="checked">
                     <label class="mx-2" for="checkbox">Se souvenir de moi</label>
                 </div>
 
-                <div class="col-6">
-                    <a class="link-register-app mt-1 fs-6 d-flex justify-content-end" href="">Mot de passe oubliée ?</a>
+                <div class="col-md-6 col-sm-12">
+                    <a class="link-register-app mt-1 fs-6 d-flex justify-content-md-end justify-content-center" href="">Mot de passe oubliée ?</a>
                 </div>
 
-                <div class="col-12 mt-3">
+                <div class="row col-12 mt-3">
                     <label class="link-register-app mt-1 fs-6 d-flex justify-content-center">Pas de compte ?
                         <a class="link-register-app" href="/register" style="color: #346751">&ensp; <strong>Incription</strong></a>
                     </label>
                 </div>
             </div>
         </div>
-
     </div>
-
 </template>
 
 <script>
