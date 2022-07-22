@@ -28,4 +28,5 @@ Route::post('/register', [UserController::class, 'store']);
 Route::get('/login', function () { return view('auth.login'); })->name('auth.login');
 Route::post('/login', [UserController::class, 'authenticate']);
 Route::get('/logout', [UserController::class, 'logout'])->name("auth.logout");
+Route::get('/account', function () { return view('account.index'); });
 

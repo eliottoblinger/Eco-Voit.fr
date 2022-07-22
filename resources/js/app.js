@@ -24,6 +24,7 @@ import FiltersComponent from "./components/tools/FiltersComponent";
 import RegisterComponent from "./components/auth/RegisterComponent";
 import AddTripComponent from "./components/trips/AddTripComponent";
 import LoginComponent from "./components/auth/LoginComponent";
+import AccountComponent from "./components/account/AccountComponent";
 
 const app = createApp({});
 
@@ -37,6 +38,7 @@ app.component('filters-component', FiltersComponent);
 app.component('register-component', RegisterComponent);
 app.component('add-trip-component', AddTripComponent);
 app.component('login-component', LoginComponent);
+app.component('account-component', AccountComponent);
 app.component(Skeletor.name, Skeletor);
 
 app.use(VCalendar);
