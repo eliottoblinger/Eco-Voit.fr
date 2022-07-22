@@ -17,10 +17,18 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () { return view('home'); });
 
+Route::middleware(['auth'])->group(function () {
+    Route::post('/trips', [TripController::class, 'store']);
+    Route::get('/trips/{unique_key}', [TripController::class, 'show']);
+    Route::get('/add-trip', [TripController::class, 'create']);
+    Route::get('/user-trips', function() {
+        return view('trips.user-trips', ['trips' => auth()->user()->trips]);
+    });
+});
+
 //Trips Routes
 Route::get('/trips', [TripController::class, 'index']);
-Route::get('/trips/{unique_key}', [TripController::class, 'show']);
-Route::get('/add-trip', [TripController::class, 'create']);
+
 
 //Auth Routes
 Route::get('/register', function () { return view('auth.register'); })->name('auth.register');

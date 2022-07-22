@@ -58,6 +58,6 @@ class User extends Authenticatable
 
     public function trips(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
-        return $this->belongsToMany(Trip::class)->withPivot('qr_code_url', 'rating', 'opinion', 'is_driver');
+        return $this->belongsToMany(Trip::class, 'user_trip')->withPivot('qr_code_url', 'rating', 'opinion', 'is_driver');
     }
 }

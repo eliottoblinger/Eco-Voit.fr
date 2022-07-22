@@ -30,8 +30,8 @@
                     </a>
                     <ul class="dropdown-menu position-absolute" aria-labelledby="navbarDropdown">
                         <div v-if="user">
-                            <li><a class="dropdown-item" href="/login">Connexion</a></li>
-                            <li><a class="dropdown-item" href="/register">Inscription</a></li>
+                            <li><a class="dropdown-item" href="/account">Mon compte</a></li>
+                            <li><a class="dropdown-item" href="/user-trips">Mes trajets</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item p-3 fw-bold" href="/logout">Déconnexion</a></li>
                         </div>

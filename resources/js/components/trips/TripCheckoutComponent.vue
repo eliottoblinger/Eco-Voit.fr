@@ -13,9 +13,9 @@
                     <div class="d-flex flex-column justify-content-between h-100">
                         <div class="d-flex flex-column">
                             <span>{{ getHours(trip.departure_date) }}</span>
-                            <span class="text-muted">{{ getHoursBetween(trip.departure_date, trip.arrival_date) }}</span>
+                            <span class="text-muted">{{ scToHours(trip.duration) }}</span>
                         </div>
-                        <span>{{ getHours(trip.arrival_date) }}</span>
+                        <span>{{ getHours(new Date( Date.parse(trip.departure_date) + trip.duration*1000 )) }}</span>
                     </div>
                 </div>
                 <div class="">
@@ -49,7 +49,7 @@
                     Prix total pour un passager
                 </div>
                 <div class="fw-bold">
-                    {{ trip.price.toFixed(2) }} €
+                    {{ trip.price.toFixed(2) / 100 }} €
                 </div>
             </div>
             <div class="d-flex justify-content-between bg-white w-50 mx-auto my-3 p-3 rounded-3 shadow-md text-green-app">
@@ -58,7 +58,7 @@
                     Empreinte carbone du trajet
                 </div>
                 <div class="fw-bold">
-                    1.9
+                    {{ (0.19 * (trip.meters / 1000)).toFixed(2) }}
                 </div>
             </div>
             <div class="d-flex flex-column bg-white w-50 mx-auto my-3 p-3 rounded-3 shadow-md">
@@ -69,8 +69,8 @@
                                 Description
                             </button>
                         </h2>
-                        <div id="flush-collapseOne" class="accordion-collapse collapse p-3" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-                            <div class="accordion-body">
+                        <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                            <div class="accordion-body px-0 py-3">
                                 {{ trip.description }}
                             </div>
                         </div>
@@ -118,9 +118,10 @@ export default {
         trip: Object
     },
     computed: {
-        ...mapGetters('trips', [
+        ...mapGetters('TripsStore', [
             'getHours',
-            'getHoursBetween'
+            'getHoursBetween',
+            'scToHours'
         ])
     }
 }

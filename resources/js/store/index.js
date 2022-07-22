@@ -3,6 +3,6 @@ import { trips } from './modules/trips'
 
 export default new Vuex.Store({
     modules: {
-        trips
+        TripsStore: trips
     }
 })

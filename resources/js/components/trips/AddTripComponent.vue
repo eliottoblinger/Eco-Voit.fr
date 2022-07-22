@@ -101,7 +101,7 @@
                 <h3 class="fs-2 fw-bold my-5">Informations sur le trajet</h3>
                 <div class="my-3">
                     <label for="exampleFormControlTextarea1" class="form-label fs-sm fw-bold">Description du trajet</label>
-                    <textarea class="form-control fs-sm fw-bold shadow-lg rounded" id="exampleFormControlTextarea1" rows="4"></textarea>
+                    <textarea class="form-control fs-sm fw-bold shadow-lg rounded" id="exampleFormControlTextarea1" rows="4" v-model="description"></textarea>
                 </div>
                 <div class="my-5">
                     <label class="form-label fs-sm fw-bold">Prix du trajet</label>
@@ -125,7 +125,8 @@
                         :class="[nextBtnDisabled ? 'disabled' : '', 'btn btn-lg bg-green-app text-white text-center fw-bold rounded shadow-lg mt-3']" style="width: 125px;" @click="step++">
                     Suivant
                 </button>
-                <button v-if="step === 5" class="btn btn-lg bg-green-app text-white text-center fw-bold rounded shadow-lg mt-3" style="width: 125px;" @click="step++">
+                <button v-if="step === 5" class="btn btn-lg bg-green-app text-white text-center fw-bold rounded shadow-lg mt-3"
+                        style="width: 125px;" @click="validForm">
                     Valider
                 </button>
             </div>
@@ -134,6 +135,8 @@
 </template>
 
 <script>
+import {mapActions} from "vuex";
+
 export default {
     name: "AddTripComponent",
     data(){
@@ -150,7 +153,11 @@ export default {
             arrivalAddress: '',
             departureDate: new Date(),
             step: 1,
+            description: '',
             nbOfPassengers: 1,
+            meters: 0,
+            searching: false,
+            duration: 0,
             price: 7.50
         }
     },
@@ -160,6 +167,27 @@ export default {
         }
     },
     methods: {
+        ...mapActions('TripsStore', [
+            'addTrip'
+        ]),
+        async validForm(){
+            await this.addTrip({
+                departureCity: this.departureCity,
+                departureZipCode: this.departureZipCode,
+                departureAddress: this.departureAddress,
+                arrivalCity: this.arrivalCity,
+                arrivalZipCode: this.arrivalZipCode,
+                arrivalAddress: this.arrivalAddress,
+                departureDate: this.departureDate,
+                nbOfPassengers: this.nbOfPassengers,
+                price: this.price * 100,
+                description: this.description,
+                meters: this.meters,
+                duration: this.duration
+            });
+
+            location.href = '/my-trips'
+        },
         selectDeparture(departure){
             const depart = Object.assign({}, departure)
 
@@ -172,43 +200,68 @@ export default {
             this.departures = [];
         },
         async searchDepartures(){
-            this.departureCity = '';
-            this.departureZipCode = '';
-            this.departureAddress = '';
+            if(!this.searching){
+                this.departureCity = '';
+                this.departureZipCode = '';
+                this.departureAddress = '';
 
-            const { data } = await axios.get('https://api-adresse.data.gouv.fr/search/', {
-                params: {
-                    q: this.departure,
-                    limit: 25
-                }
-            });
+                this.searching = true;
 
-            this.departures = data.features;
+                const { data } = await axios.get('https://api-adresse.data.gouv.fr/search/', {
+                    params: {
+                        q: this.departure,
+                        limit: 25
+                    }
+                });
+
+                this.searching = false;
+
+                this.departures = data.features;
+            }
         },
-        selectArrival(arriv){
+        async selectArrival(arriv){
             const arrival = Object.assign({}, arriv)
 
             this.arrivalCity = arrival.city;
             this.arrivalZipCode = arrival.postcode;
             this.arrivalAddress = arrival.street;
 
-            this.arrival = arriv.label;
+            this.arrival = arrival.label;
 
             this.arrivals = [];
-        },
-        async searchArrivals(){
-            this.arrivalCity = '';
-            this.arrivalZipCode = '';
-            this.arrivalAddress = '';
 
-            const { data } = await axios.get('https://api-adresse.data.gouv.fr/search/', {
+            const { data } = await axios.get('https://api.distancematrix.ai/maps/api/distancematrix/json', {
                 params: {
-                    q: this.arrival,
-                    limit: 25
+                    key: 'eCMYOTcfT9GC78IiJfAPZRPGWaR4J',
+                    origins: `${this.departure}`,
+                    destinations: `${this.arrival}`,
                 }
             });
 
-            this.arrivals = data.features;
+            this.meters = data.rows[0].elements[0].distance.value;
+            this.duration = data.rows[0].elements[0].duration.value;
+        },
+        async searchArrivals(){
+            if(!this.searching) {
+                this.arrivalCity = '';
+                this.arrivalZipCode = '';
+                this.arrivalAddress = '';
+                this.meters = 0;
+                this.duration = 0;
+
+                this.searching = true;
+
+                const {data} = await axios.get('https://api-adresse.data.gouv.fr/search/', {
+                    params: {
+                        q: this.arrival,
+                        limit: 25
+                    }
+                });
+
+                this.searching = false;
+
+                this.arrivals = data.features;
+            }
         }
     }
 }

@@ -31,7 +31,7 @@ export default {
     },
     methods: {
         chunk(arr, len){
-            var chunks = [],
+            let chunks = [],
                 i = 0,
                 n = arr.length;
 
@@ -41,12 +41,12 @@ export default {
 
             return chunks;
         },
-        ...mapMutations('trips', [
+        ...mapMutations('TripsStore', [
             'storeTrips'
         ]),
     },
     computed: {
-        ...mapGetters('trips', [
+        ...mapGetters('TripsStore', [
             'getFilterTrips'
         ])
     }

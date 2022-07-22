@@ -25,7 +25,7 @@ class TripFactory extends Factory
 
         $departureCity = 'Paris';
         $arrivalCity = 'Lille';
-        $departureDate = $this->faker->dateTimeBetween('- 8 hours', '+ 3 hours');
+        $departureDate = $this->faker->dateTimeBetween('- 3 hours', '+ 8 hours');
 
         return [
             'departure_city' => $departureCity,
@@ -35,9 +35,9 @@ class TripFactory extends Factory
             'arrival_zip_code' => $this->faker->postcode,
             'arrival_address' => $this->faker->streetAddress,
             'departure_date' => $departureDate,
-            'arrival_date' => $this->faker->dateTimeBetween('+ 3 hours', '+ 12 hours'),
-            'kilometers' => $this->faker->randomFloat(2, 1, 1000),
-            'price' => $this->faker->randomFloat(2, 2, 500),
+            'duration' => $this->faker->numberBetween(1000, 100000),
+            'meters' => $this->faker->numberBetween(1000, 100000),
+            'price' => $this->faker->numberBetween(100, 10000),
             'description' => $this->faker->realText(200),
             'number_of_seats' => $this->faker->numberBetween(1, 7),
             'status' => 'planned',

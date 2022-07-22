@@ -60,12 +60,12 @@ export default {
         departureDate: String
     },
     methods: {
-        ...mapMutations('trips', [
+        ...mapMutations('TripsStore', [
             'filterBy'
         ]),
     },
     computed: {
-        ...mapGetters('trips', [
+        ...mapGetters('TripsStore', [
             'getFilterTrips'
         ])
     }

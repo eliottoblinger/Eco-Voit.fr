@@ -1,10 +1,3 @@
-function getMsBetween(departure_date, arrival_date){
-    const departureDate = new Date(departure_date);
-    const arrivalDate = new Date(arrival_date);
-
-    return arrivalDate - departureDate;
-}
-
 export const trips = {
     namespaced: true,
     state: () => ({
@@ -21,23 +14,14 @@ export const trips = {
             state.isFiltering = true;
             setTimeout(() => {
                 if(filter === 'departure'){
-                    state.trips.sort((a, b) => a.departure_date > b.departure_date ? 1 : -1)
-                    state.filterTrips.sort((a, b) => a.departure_date > b.departure_date ? 1 : -1)
+                    state.trips.sort((a, b) => Date.parse(a.departure_date) > Date.parse(b.departure_date) ? 1 : -1)
+                    state.filterTrips.sort((a, b) => Date.parse(a.departure_date) > Date.parse(b.departure_date) ? 1 : -1)
                 }else if(filter === 'price'){
                     state.trips.sort((a, b) => a.price > b.price ? 1 : -1)
                     state.filterTrips.sort((a, b) => a.price > b.price ? 1 : -1)
                 }else if(filter === 'faster'){
-                    state.trips.sort((a, b) => {
-                        const timeTripA = getMsBetween(a.departure_date, a.arrival_date);
-                        const timeTripB = getMsBetween(b.departure_date, b.arrival_date);
-
-                        return timeTripA > timeTripB ? 1 : -1
-                    });
                     state.filterTrips.sort((a, b) => {
-                        const timeTripA = getMsBetween(a.departure_date, a.arrival_date);
-                        const timeTripB = getMsBetween(b.departure_date, b.arrival_date);
-
-                        return timeTripA > timeTripB ? 1 : -1
+                        return a.duration > b.duration ? 1 : -1
                     });
                 }else{
                     state.filterTrips = state.trips.filter(trip => new Date(trip.departure_date) >= filter)
@@ -47,7 +31,22 @@ export const trips = {
         }
     },
     actions: {
-
+        async addTrip(context, payload){
+            await axios.post('/trips', {
+                departureCity: payload.departureCity,
+                departureZipCode: payload.departureZipCode,
+                departureAddress: payload.departureAddress,
+                arrivalCity: payload.arrivalCity,
+                arrivalZipCode: payload.arrivalZipCode,
+                arrivalAddress: payload.arrivalAddress,
+                departureDate: payload.departureDate,
+                nbOfPassengers: payload.nbOfPassengers,
+                price: payload.price,
+                description: payload.description,
+                duration: payload.duration,
+                meters: payload.meters
+            });
+        }
     },
     getters: {
         getTrips(state){
@@ -78,6 +77,14 @@ export const trips = {
             }
 
             return `${('0' + diffHrs).slice(-2)}:${('0' + diffMins).slice(-2)}`;
-        }
+        },
+        scToHours: () => (seconds) => {
+            const h = Math.floor(seconds / (60 * 60));
+
+            const divisor_for_minutes = seconds % (60 * 60);
+            const m = Math.floor(divisor_for_minutes / 60);
+
+            return `${h?`${h}:`:"00:"}${m.toString().length > 1 ? m : '0' + m}`
+        },
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Trip;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class TripController extends Controller
@@ -33,7 +34,7 @@ class TripController extends Controller
             ->where('arrival_city', 'like', '%'.$arrivalCity.'%')
             ->where('departure_date', '>=', $departureDate)
             ->where('number_of_seats', '>=', $numberOfSeats)
-            ->orderByRaw('(arrival_date - departure_date) asc')
+            ->orderBy('duration', 'asc')
             ->first();
 
         $trips = Trip::where('departure_city', 'like', '%'.$departureCity.'%')
@@ -66,7 +67,42 @@ class TripController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $departureCity = $request->departureCity;
+        $departureZipCode = $request->departureZipCode;
+        $departureAddress = $request->departureAddress;
+        $arrivalCity = $request->arrivalCity;
+        $arrivalZipCode = $request->arrivalZipCode;
+        $arrivalAddress = $request->arrivalAddress;
+        $departureDate = Carbon::parse($request->departureDate);
+        $nbOfPassengers = $request->nbOfPassengers;
+        $price = $request->price;
+        $description = $request->description;
+        $meters = $request->meters;
+        $duration = $request->duration;
+
+        $trip = Trip::create([
+            'departure_city' => $departureCity,
+            'departure_zip_code' => $departureZipCode,
+            'departure_address' => $departureAddress,
+            'arrival_city' => $arrivalCity,
+            'arrival_zip_code' => $arrivalZipCode,
+            'arrival_address' => $arrivalAddress,
+            'departure_date' => $departureDate,
+            'duration' => $duration,
+            'meters' => $meters,
+            'price' => $price,
+            'description' => $description,
+            'number_of_seats' => $nbOfPassengers,
+            'status' => 'planned',
+            'unique_key' => substr(str_shuffle("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"), 10, 30),
+        ]);
+
+        auth()->user()->trips()->attach($trip->id, [
+            'qr_code_url' => '',
+            'is_driver' => true
+        ]);
+
+        return json_encode($trip, 200);
     }
 
     /**

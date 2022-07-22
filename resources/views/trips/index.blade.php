@@ -16,10 +16,12 @@
                     :is-filterable="false"/>
             </div>
         </div>
-    </div>
 
-    <filters-component
-        :departure-date="{{ json_encode($trips->first()->departure_date, null) }}"/>
+    </div>
+    <div>
+        <filters-component
+            :departure-date="{{ json_encode($trips->first()->departure_date, null) }}"/>
+    </div>
 
     <trips-component
         :trips="{{ json_encode($trips, null) }}"/>
