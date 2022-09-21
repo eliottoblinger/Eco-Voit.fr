@@ -112,6 +112,19 @@ input[type="radio"]:checked::before { /* selected */
     font-size: 100%;
 }
 
+.btn-register-app {
+    text-decoration: none !important;
+    color: black;
+    font-style: normal;
+    font-size: 100%;
+    background-color: transparent !important;
+    border: none !important;
+}
+
+.btn-register-app:hover {
+    color: #0a53be;
+}
+
 .accordion-button {
     background: none !important;
     border: none !important;

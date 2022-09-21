@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -36,7 +37,9 @@ class UserController extends Controller
             'password' => ['required'],
         ]);
 
-        if (Auth::attempt($credentials)) {
+        $user = User::where('email', $request->email)->first();
+
+        if (Auth::attempt($credentials) && !$user->deleted_at) {
             $request->session()->regenerate();
             return json_encode(['status' => 200]);
         }
@@ -47,6 +50,61 @@ class UserController extends Controller
     public function logout() {
         Auth::logout();
         return redirect('/login');
+    }
+
+    public function setPicture(Request $request) {
+        ini_set('memory_limit', '1024M');
+        ini_set('upload_max_filesize', '1024M');
+        ini_set('post_max_size', '1024M');
+        $s3 = Storage::disk('s3');
+        $path = auth()->user()->id . "/profil-picture/avatar." . $request->file->extension();
+        $res = $s3->put($path, file_get_contents($request->file->path()));
+
+        if ($res) {
+            //https://eco-voit-bucket.s3.eu-west-3.amazonaws.com/ + $path
+            // Update avatar user
+            $user = User::find(auth()->user()->id);
+            $user->update([
+                "avatar_url" => "https://eco-voit-bucket.s3.eu-west-3.amazonaws.com/" . $path
+            ]);
+        }
+    }
+
+    public function updateEmail(Request $request) {
+        $user = User::find(auth()->user()->id);
+
+        if (!empty($user) && !empty($request->mail)) {
+            $user->update([
+                "email" => $request->mail
+            ]);
+        }
+
+        return redirect('/account');
+    }
+
+    public function updateIdentity(Request $request) {
+        $user = User::find(auth()->user()->id);
+
+        if (!empty($user) && !empty($request->name) && !empty($request->surname)) {
+            $user->update([
+                "name" => $request->name,
+                "surname" => $request->surname
+            ]);
+        }
+
+        return redirect('/account');
+    }
+
+    public function updateBio(Request $request) {
+        $user = User::find(auth()->user()->id);
+
+        if (!empty($user) && !empty($request->bio)) {
+            $user->update([
+                "bio" => $request->bio,
+            ]);
+        }
+
+        return redirect('/account');
     }
 
     /**
@@ -125,8 +183,15 @@ class UserController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy()
     {
-        //
+        $user = User::find(auth()->user()->id);
+        $user->update([
+            "deleted_at" => Carbon::now()
+        ]);
+
+        Auth::logout();
+
+        return redirect('/login');
     }
 }
