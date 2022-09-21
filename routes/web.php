@@ -21,8 +21,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/trips', [TripController::class, 'store']);
     Route::get('/trips/{unique_key}', [TripController::class, 'show']);
     Route::get('/add-trip', [TripController::class, 'create']);
-    Route::get('/user-trips', function() {
-        return view('trips.user-trips', ['trips' => auth()->user()->trips]);
+    Route::get('/my-trips', function() {
+        return view('trips.my-trips', ['trips' => auth()->user()->trips]);
     });
 
     Route::get('/account', function () { return view('account.index'); });

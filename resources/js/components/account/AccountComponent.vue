@@ -110,7 +110,7 @@ export default {
     computed: {
         comment(){
             return this.user.trips.filter(trip =>
-                trip.pivot.opinion.trim() !== ""
+                trip.pivot.opinion && trip.pivot.opinion.trim() !== ""
             ).length;
         }
     },
