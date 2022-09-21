@@ -127,7 +127,7 @@ export default {
     },
     methods: {
         doPayment() {
-            location.href = `/payment-trip/${this.trip}`;
+            location.href = `/payment-trip/${this.trip.unique_key}`;
         }
     }
 }

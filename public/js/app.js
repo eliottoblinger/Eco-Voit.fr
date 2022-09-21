@@ -24475,7 +24475,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)('TripsStore', ['getHours', 'getHoursBetween', 'scToHours', 'getCarbonFootPrint'])),
   methods: {
     doPayment: function doPayment() {
-      location.href = "/payment-trip/".concat(this.trip);
+      location.href = "/payment-trip/".concat(this.trip.unique_key);
     }
   }
 });

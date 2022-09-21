@@ -45,4 +45,4 @@ Route::get('/login', function () { return view('auth.login'); })->name('auth.log
 Route::post('/login', [UserController::class, 'authenticate']);
 
 //Payment Routes
-Route::get('/payment-trip/{unique_key}', function () { return view('payment.paymentTrip'); })->name('payment.paymentTrip');
+Route::get('/payment-trip/{unique_key}', [TripController::class, 'showPayment']);
