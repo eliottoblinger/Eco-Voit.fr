@@ -19,6 +19,7 @@ Route::get('/', function () { return view('home'); });
 
 Route::middleware(['auth'])->group(function () {
     Route::post('/trips', [TripController::class, 'store']);
+    Route::post('/trips/{trip}/reserve', [TripController::class, 'reserveTrip']);
     Route::get('/trips/{unique_key}', [TripController::class, 'show']);
     Route::get('/add-trip', [TripController::class, 'create']);
     Route::get('/my-trips', function() {
@@ -43,6 +44,7 @@ Route::get('/register', function () { return view('auth.register'); })->name('au
 Route::post('/register', [UserController::class, 'store']);
 Route::get('/login', function () { return view('auth.login'); })->name('auth.login');
 Route::post('/login', [UserController::class, 'authenticate']);
+Route::post('/pay', [TripController::class, 'pay']);
 
 //Payment Routes
 Route::get('/payment-trip/{unique_key}', [TripController::class, 'showPayment']);

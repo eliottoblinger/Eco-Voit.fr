@@ -34,8 +34,8 @@
 
             <div class="row my-3 w-100 mt-5">
                 <div class="row my-3">
-                    <div class="col-6 d-grid text-center fs-4">Mes informations</div>
-                    <div class="col-6 d-grid text-center fs-4">Mon compte</div>
+                    <div class="col-6 d-grid text-center fs-4" @click="setRoute(1)">Mes informations</div>
+                    <div class="col-6 d-grid text-center fs-4" @click="setRoute(2)">Mon compte</div>
                 </div>
                 <div class="d-flex justify-content-center">
                     <button class="btn-register-app" @click="setRoute(1)"><hr class="my-4 vertical-line" v-bind:style="styleInformation"></button>

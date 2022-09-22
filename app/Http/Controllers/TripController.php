@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Trip;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Stripe\Charge;
+use Stripe\PaymentIntent;
+use Stripe\Stripe;
 
 class TripController extends Controller
 {
@@ -19,7 +22,7 @@ class TripController extends Controller
 
         $arrivalCity = $request->query('arrival');
 
-        $departureDate = $request->query('date');
+        $departureDate = Carbon::parse(preg_replace('/\(.*$/', '', $request->query('date')));
 
         $numberOfSeats = $request->query('seats');
 
@@ -40,11 +43,12 @@ class TripController extends Controller
         $trips = Trip::where('departure_city', 'like', '%'.$departureCity.'%')
             ->where('arrival_city', 'like', '%'.$arrivalCity.'%')
             ->where('departure_date', '>=', $departureDate)
-            ->where('number_of_seats', '>=', $numberOfSeats)
-            ->where('id', '!=', $cheaperTrip->id)
-            ->where('id', '!=', $fasterTrip->id)
-            ->orderBy('departure_date')
-            ->get();
+            ->where('number_of_seats', '>=', $numberOfSeats);
+
+        if($cheaperTrip) $trips->where('id', '!=', $cheaperTrip->id);
+        if($fasterTrip) $trips->where('id', '!=', $fasterTrip->id);
+
+        $trips = $trips->orderBy('departure_date')->get();
 
         return view('trips.index', ['cheaperTrip' => $cheaperTrip, 'fasterTrip' => $fasterTrip, 'trips' => $trips]);
     }
@@ -57,6 +61,19 @@ class TripController extends Controller
     public function create()
     {
         return view('trips.add');
+    }
+
+    public function pay(Request $request){
+
+        Stripe::setApiKey('sk_test_51LkYdKG2x14CtAPX2Xpyg0xs84yA9pC7CZf6XD7aUPLv1edgECnxtkWDYb1t8uWL54rx3m3VRhoHn6lrvjRRwrDG00RCytbDlf');
+
+        $intent = PaymentIntent::create([
+            'amount' => $request->amount,
+            'currency' => 'eur',
+            'metadata' => ['integration_check'=>'accept_a_payment']
+        ]);
+
+        return json_encode($intent, 201);
     }
 
     public function showPayment($unique_key) {
@@ -106,6 +123,15 @@ class TripController extends Controller
         auth()->user()->trips()->attach($trip->id, [
             'qr_code_url' => '',
             'is_driver' => true
+        ]);
+
+        return json_encode($trip, 200);
+    }
+
+    public function reserveTrip(Trip $trip){
+        auth()->user()->trips()->attach($trip->id, [
+            'qr_code_url' => '',
+            'is_driver' => false
         ]);
 
         return json_encode($trip, 200);

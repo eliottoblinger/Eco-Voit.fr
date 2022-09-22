@@ -186,7 +186,7 @@ export default {
                 duration: this.duration
             });
 
-            location.href = '/my-trips'
+            location.href = '/account'
         },
         selectDeparture(departure){
             const depart = Object.assign({}, departure)
