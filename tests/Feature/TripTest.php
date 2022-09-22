@@ -8,7 +8,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Auth;
 use Tests\TestCase;
 
-class TripControllerTest extends TestCase
+class TripTest extends TestCase
 {
     /**
      * A basic feature test example.
@@ -28,7 +28,7 @@ class TripControllerTest extends TestCase
 
     public function testGoToUserTripsPage()
     {
-        $response = $this->get('/user-trips');
+        $response = $this->get('/my-trips');
 
         if(Auth::check()){
             $response->assertStatus(200);
