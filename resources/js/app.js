@@ -26,6 +26,7 @@ import AddTripComponent from "./components/trips/AddTripComponent";
 import LoginComponent from "./components/auth/LoginComponent";
 import UserTripsComponent from "./components/trips/UserTripsComponent";
 import AccountComponent from "./components/account/AccountComponent";
+import PaymentTrip from "./components/payment/PaymentTrip";
 
 const app = createApp({});
 
@@ -41,6 +42,7 @@ app.component('add-trip-component', AddTripComponent);
 app.component('login-component', LoginComponent);
 app.component('user-trips-component', UserTripsComponent);
 app.component('account-component', AccountComponent);
+app.component('payment-trip-component', PaymentTrip);
 
 app.component(Skeletor.name, Skeletor);
 

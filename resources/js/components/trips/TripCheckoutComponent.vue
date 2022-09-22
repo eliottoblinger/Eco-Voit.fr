@@ -102,7 +102,7 @@
             </div>
         </div>
         <div class="d-flex justify-content-center my-3">
-            <button class="btn btn-lg rounded-pill bg-green-app text-white">
+            <button @click="doPayment" class="btn btn-lg rounded-pill bg-green-app text-white">
                 Réserver
             </button>
         </div>
@@ -125,5 +125,10 @@ export default {
             'getCarbonFootPrint'
         ])
     },
+    methods: {
+        doPayment() {
+            location.href = `/payment-trip/${this.trip.unique_key}`;
+        }
+    }
 }
 </script>

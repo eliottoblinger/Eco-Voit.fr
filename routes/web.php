@@ -26,12 +26,17 @@ Route::middleware(['auth'])->group(function () {
     });
 
     Route::get('/account', function () { return view('account.index'); });
+    Route::post('/profil-picture', [UserController::class, 'setPicture']);
+    Route::post('/update-email', [UserController::class, 'updateEmail']);
+    Route::post('/update-identity', [UserController::class, 'updateIdentity']);
+    Route::post('/update-password', [UserController::class, 'updatePassword']);
+    Route::post('/update-bio', [UserController::class, 'updateBio']);
+    Route::get('/delete-account', [UserController::class, 'destroy'])->name("auth.logout");
     Route::get('/logout', [UserController::class, 'logout'])->name("auth.logout");
 });
 
 //Trips Routes
 Route::get('/trips', [TripController::class, 'index']);
-
 
 //Auth Routes
 Route::get('/register', function () { return view('auth.register'); })->name('auth.register');
@@ -39,3 +44,5 @@ Route::post('/register', [UserController::class, 'store']);
 Route::get('/login', function () { return view('auth.login'); })->name('auth.login');
 Route::post('/login', [UserController::class, 'authenticate']);
 
+//Payment Routes
+Route::get('/payment-trip/{unique_key}', [TripController::class, 'showPayment']);

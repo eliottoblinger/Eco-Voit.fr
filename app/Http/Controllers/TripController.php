@@ -59,6 +59,12 @@ class TripController extends Controller
         return view('trips.add');
     }
 
+    public function showPayment($unique_key) {
+        $trip = Trip::where('unique_key', $unique_key)
+            ->first();
+
+        return view('payment.index', ['trip' => $trip]);
+    }
     /**
      * Store a newly created resource in storage.
      *
