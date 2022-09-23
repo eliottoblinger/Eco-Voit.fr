@@ -134,6 +134,10 @@ class TripController extends Controller
             'is_driver' => false
         ]);
 
+        $trip->update([
+            'number_of_seats' => ($trip->number_of_seats - 1)
+        ]);
+
         return json_encode($trip, 200);
     }
 
