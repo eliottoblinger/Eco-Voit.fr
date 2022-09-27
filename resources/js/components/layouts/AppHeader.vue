@@ -33,6 +33,7 @@
                     <ul class="dropdown-menu position-absolute" style="width: 10vw" aria-labelledby="navbarDropdown">
                         <div v-if="user">
                             <li><a class="dropdown-item" href="/account">Mon compte</a></li>
+                            <li v-if="user.role_id === 2"><a class="dropdown-item" href="/dashboard">Tableau de bord</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item p-3 fw-bold" href="/logout">Déconnexion</a></li>
                         </div>

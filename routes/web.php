@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () { return view('home'); });
+Route::get('/', function () { return view('home'); })->name('home');
 
 Route::middleware(['auth'])->group(function () {
     Route::post('/trips', [TripController::class, 'store']);
@@ -34,6 +34,12 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/update-bio', [UserController::class, 'updateBio']);
     Route::get('/delete-account', [UserController::class, 'destroy'])->name("auth.logout");
     Route::get('/logout', [UserController::class, 'logout'])->name("auth.logout");
+
+    Route::middleware(['auth'])->group(function () {
+        Route::get('/dashboard', function(){
+            return view('dashboard.index');
+        });
+    });
 });
 
 //Trips Routes

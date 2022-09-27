@@ -61,4 +61,8 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Trip::class, 'user_trip')->withPivot('qr_code_url', 'rating', 'opinion', 'is_driver');
     }
+
+    public function hasRole($role){
+        return $this->role()->first()->id == $role;
+    }
 }
