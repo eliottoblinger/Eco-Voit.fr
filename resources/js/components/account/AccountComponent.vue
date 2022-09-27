@@ -23,7 +23,10 @@
                 <div class="d-flex flex-row justify-content-center">
                     <div class="d-flex flex-column" style="margin-right: 5vw">
                         <div class="text-center fs-2">{{ user.trips.length }}</div>
-                        <div class="text-center fs-4">Trajet</div>
+                        <div class="text-center fs-4">
+                            <span v-if="user.trips.length > 1">Trajets</span>
+                            <span v-else>Trajet</span>
+                        </div>
                     </div>
                     <div class="d-flex flex-column" style="margin-right: 5vw">
                         <div class="text-center fs-2">0</div>
@@ -225,7 +228,22 @@
 
                 <div v-else-if="route === 8">
                     <div class="row my-3 w-75" style="margin-left: 6.5vw">
-                        <label class="fs-5">Mes trajets</label>
+                        <label class="fs-5 mb-4">Mes trajets</label>
+
+<!--                        <div style="max-width: 45vw; background-color: transparent; box-shadow: rgba(0, 0, 0, 0.04) 0px 3px 5px;" class="card mb-3" >-->
+<!--                            <div style="padding: 2vh">-->
+<!--                                <h5 class="card-title">{{ trip.departure_city }} - {{ trip.arrival_city }}</h5>-->
+<!--                                <p class="card-text">{{ trip.description }}</p>-->
+<!--                                <p class="card-text">{{ trip.departure_date }}</p>-->
+<!--                            </div>-->
+<!--                        </div>-->
+
+                        <div class="p-3 m-3" v-for="trip in user.trips">
+                            <trip-component
+                                :trip="trip"
+                                :is-filterable="true"/>
+                        </div>
+
                     </div>
                 </div>
 

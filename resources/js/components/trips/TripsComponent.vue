@@ -3,7 +3,8 @@
         <div class="p-3 m-3">
             <trip-component
                 :trip="trip[0]"
-                :is-filterable="true"/>
+                :is-filterable="true"
+            />
         </div>
         <div v-if="trip[1]" class="p-3 m-3">
             <trip-component

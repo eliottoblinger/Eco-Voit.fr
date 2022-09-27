@@ -13,7 +13,7 @@
                 </li>
                 <li class="nav-item dropdown bg-dark-app mx-3 px-3">
                     <a class="nav-link dropdown-toggle d-flex align-items-center py-1" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <div v-if="user.avatar_url" class="me-1" :style="`width:50px;
+                        <div v-if="user && user.avatar_url" class="me-1" :style="`width:50px;
                             height:50px;
                             border-radius:50%;
                             background-image: url(${user.avatar_url});

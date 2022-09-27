@@ -99,7 +99,7 @@
             </div>
         </div>
         <div class="d-flex justify-content-center my-3">
-            <button @click="doPayment" class="btn btn-lg rounded-pill bg-green-app text-white">
+            <button v-if="!reserved" @click="doPayment" class="btn btn-lg rounded-pill bg-green-app text-white">
                 Réserver
             </button>
         </div>
@@ -112,7 +112,8 @@ import {mapGetters} from "vuex";
 export default {
     name: "TripCheckoutComponent",
     props: {
-        trip: Object
+        trip: Object,
+        reserved: Boolean
     },
     computed: {
         ...mapGetters('TripsStore', [
