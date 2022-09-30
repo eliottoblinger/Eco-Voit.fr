@@ -6,6 +6,7 @@
     <title>Eco-Voit.fr</title>
 
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <link rel="stylesheet" media="screen and (max-width: 900px)" href="{{ asset('css/app_medium.css') }}">
 </head>
 <body>
 
