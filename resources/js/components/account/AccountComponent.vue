@@ -238,7 +238,15 @@
 <!--                            </div>-->
 <!--                        </div>-->
 
-                        <div class="p-3 m-3" v-for="trip in user.trips">
+                        <span class="fw-bold fs-sm">Trajet Conducteur</span>
+                        <div class="p-3 m-3" v-for="trip in user.trips.filter(trip => trip.driver[0].id === user.id)">
+                            <trip-component
+                                :trip="trip"
+                                :is-filterable="true"/>
+                        </div>
+
+                        <span class="fw-bold fs-sm">Trajet Passager</span>
+                        <div class="p-3 m-3" v-for="trip in user.trips.filter(trip => trip.driver[0].id !== user.id)">
                             <trip-component
                                 :trip="trip"
                                 :is-filterable="true"/>

@@ -26,8 +26,10 @@ class TripController extends Controller
 
         $numberOfSeats = $request->query('seats');
 
-        $cheaperTrip = Trip::whereHas('driver', function($q) {
-            $q->where('user_id', '!=', auth()->user()->id);
+        $userId = auth()->user()->id;
+
+        $cheaperTrip = Trip::whereDoesntHave('users', function($q) use ($userId) {
+            $q->where('user_id', $userId);
         })
             ->where('departure_city', 'like', '%'.$departureCity.'%')
             ->where('arrival_city', 'like', '%'.$arrivalCity.'%')
@@ -36,8 +38,8 @@ class TripController extends Controller
             ->orderBy('price')
             ->first();
 
-        $fasterTrip = Trip::whereHas('driver', function($q) {
-            $q->where('user_id', '!=', auth()->user()->id);
+        $fasterTrip = Trip::whereDoesntHave('users', function($q) use ($userId) {
+            $q->where('user_id', $userId);
         })
             ->where('departure_city', 'like', '%'.$departureCity.'%')
             ->where('arrival_city', 'like', '%'.$arrivalCity.'%')
@@ -46,8 +48,8 @@ class TripController extends Controller
             ->orderBy('duration', 'asc')
             ->first();
 
-        $trips = Trip::whereHas('driver', function($q) {
-            $q->where('user_id', '!=', auth()->user()->id);
+        $trips = Trip::whereDoesntHave('users', function($q) use ($userId) {
+            $q->where('user_id', $userId);
         })
             ->where('departure_city', 'like', '%'.$departureCity.'%')
             ->where('arrival_city', 'like', '%'.$arrivalCity.'%')
