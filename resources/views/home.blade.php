@@ -122,7 +122,7 @@
     </div>
     <div class="p-3 mt-4" class="picture_ext_home" style="background-image: url('https://eco-voit-bucket.s3.eu-west-3.amazonaws.com/assets/home-image-2.png');
                                                      background-position: bottom;
-                                                     background-size: 120%;
+                                                     background-size: 200vh;
                                                      background-repeat: no-repeat
     ">
         <div class="d-flex flex-column w-75 mx-auto py-3 my-3">
