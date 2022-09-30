@@ -49,8 +49,8 @@
                 <h3 class="text-white fw-bold mb-3">Explorer la France et ses alentours</h3>
                 <h5 class="text-white fw-lighter mb-3">Ces destinations prisées ont beaucoup à offrir</h5>
             </div>
-            <div class="d-flex justify-content-between mt-3">
-                <div class="bg-white shadow-sm rounded fw-bold text-green-app fs-5 p-3 d-flex align-items-center justify-content-between me-3" style="width:25%; height: 50px;">
+            <div class="d-flex justify-content-between mt-3 multi_trips_home">
+                <div class="bg-white shadow-sm rounded fw-bold text-green-app fs-5 p-3 d-flex align-items-center justify-content-between me-3 unique_trip_home" style="width:25%; height: 50px;">
                     <div class="d-flex flex-lg-row flex-column align-items-center">
                         <span class="me-0 me-lg-3">Paris</span>
                         <svg class="d-none d-lg-block" width="12" height="10" viewBox="0 0 12 10" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -65,7 +65,7 @@
                         </svg>
                     </div>
                 </div>
-                <div class="bg-white shadow-sm rounded fw-bold text-green-app fs-5 p-3 d-flex align-items-center justify-content-between me-3" style="width:25%; height: 50px;">
+                <div class="bg-white shadow-sm rounded fw-bold text-green-app fs-5 p-3 d-flex align-items-center justify-content-between me-3 unique_trip_home" style="width:25%; height: 50px;">
                     <div class="d-flex flex-lg-row flex-column align-items-center">
                         <span class="me-0 me-lg-3">Paris</span>
                         <svg class="d-none d-lg-block" width="12" height="10" viewBox="0 0 12 10" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -80,7 +80,7 @@
                         </svg>
                     </div>
                 </div>
-                <div class="bg-white shadow-sm rounded fw-bold text-green-app fs-5 p-3 d-flex align-items-center justify-content-between" style="width:25%; height: 50px;">
+                <div class="bg-white shadow-sm rounded fw-bold text-green-app fs-5 p-3 d-flex align-items-center justify-content-between unique_trip_home" style="width:25%; height: 50px;">
                     <div class="d-flex flex-lg-row flex-column align-items-center">
                         <span class="me-0 me-lg-3">Paris</span>
                         <svg class="d-none d-lg-block" width="12" height="10" viewBox="0 0 12 10" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -99,11 +99,11 @@
         </div>
     </div>
     <div class="bg-white d-flex align-items-center py-3" style="min-height: 75vh;">
-        <div class="d-flex flex-column flex-lg-row justify-content-evenly align-items-center mx-auto fs-5 w-75">
+        <div class="d-flex flex-column flex-lg-row justify-content-evenly align-items-center mx-auto fs-5 w-100">
             <div class="w-50 d-flex justify-content-center align-items-center m-3">
-                <img src="https://eco-voit-bucket.s3.eu-west-3.amazonaws.com/assets/home-image-1.png" />
+                <img class="img_home" src="https://eco-voit-bucket.s3.eu-west-3.amazonaws.com/assets/home-image-1.png" />
             </div>
-            <div class="w-50 m-3">
+            <div class="w-75 m-3">
                 <h3 class="fw-bold mb-3">Faites des économies sur votre plein !</h3>
                 <p class="py-3">
                     Lorem Ipsum is simply dummy text of the printing and typesetting industry.
@@ -120,9 +120,11 @@
             </div>
         </div>
     </div>
-    <div class="p-3" style="background-image: url('https://eco-voit-bucket.s3.eu-west-3.amazonaws.com/assets/home-image-2.png');
-                            background-position: bottom;
-                            background-size: 125%">
+    <div class="p-3 mt-4" class="picture_ext_home" style="background-image: url('https://eco-voit-bucket.s3.eu-west-3.amazonaws.com/assets/home-image-2.png');
+                                                     background-position: bottom;
+                                                     background-size: 200vh;
+                                                     background-repeat: no-repeat
+    ">
         <div class="d-flex flex-column w-75 mx-auto py-3 my-3">
             <div class="d-flex flex-column">
                 <h3 class="fw-bold mb-3">Faites des économies sur votre plein !</h3>

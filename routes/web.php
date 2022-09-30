@@ -15,16 +15,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () { return view('home'); });
+Route::get('/', function () { return view('home'); })->name('home');
 
 Route::middleware(['auth'])->group(function () {
     Route::post('/trips', [TripController::class, 'store']);
     Route::post('/trips/{trip}/reserve', [TripController::class, 'reserveTrip']);
     Route::get('/trips/{unique_key}', [TripController::class, 'show']);
     Route::get('/add-trip', [TripController::class, 'create']);
-    Route::get('/my-trips', function() {
-        return view('trips.my-trips', ['trips' => auth()->user()->trips]);
-    });
 
     Route::get('/account', function () { return view('account.index'); });
     Route::post('/profil-picture', [UserController::class, 'setPicture']);
@@ -34,6 +31,12 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/update-bio', [UserController::class, 'updateBio']);
     Route::get('/delete-account', [UserController::class, 'destroy'])->name("auth.logout");
     Route::get('/logout', [UserController::class, 'logout'])->name("auth.logout");
+
+    Route::middleware(['auth'])->group(function () {
+        Route::get('/dashboard', function(){
+            return view('dashboard.index');
+        });
+    });
 });
 
 //Trips Routes

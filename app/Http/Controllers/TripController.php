@@ -22,31 +22,42 @@ class TripController extends Controller
 
         $arrivalCity = $request->query('arrival');
 
-        $departureDate = Carbon::parse(preg_replace('/\(.*$/', '', $request->query('date')));
+        $departureDate = Carbon::parse(preg_replace('/\(.*$/', '', $request->query('date')))->startOfDay();
 
         $numberOfSeats = $request->query('seats');
 
-        $cheaperTrip = Trip::where('departure_city', 'like', '%'.$departureCity.'%')
+        $userId = auth()->user()->id;
+
+        $cheaperTrip = Trip::whereDoesntHave('users', function($q) use ($userId) {
+            $q->where('user_id', $userId);
+        })
+            ->where('departure_city', 'like', '%'.$departureCity.'%')
             ->where('arrival_city', 'like', '%'.$arrivalCity.'%')
             ->where('departure_date', '>=', $departureDate)
             ->where('number_of_seats', '>=', $numberOfSeats)
             ->orderBy('price')
             ->first();
 
-        $fasterTrip = Trip::where('departure_city', 'like', '%'.$departureCity.'%')
+        $fasterTrip = Trip::whereDoesntHave('users', function($q) use ($userId) {
+            $q->where('user_id', $userId);
+        })
+            ->where('departure_city', 'like', '%'.$departureCity.'%')
             ->where('arrival_city', 'like', '%'.$arrivalCity.'%')
             ->where('departure_date', '>=', $departureDate)
             ->where('number_of_seats', '>=', $numberOfSeats)
             ->orderBy('duration', 'asc')
             ->first();
 
-        $trips = Trip::where('departure_city', 'like', '%'.$departureCity.'%')
+        $trips = Trip::whereDoesntHave('users', function($q) use ($userId) {
+            $q->where('user_id', $userId);
+        })
+            ->where('departure_city', 'like', '%'.$departureCity.'%')
             ->where('arrival_city', 'like', '%'.$arrivalCity.'%')
             ->where('departure_date', '>=', $departureDate)
             ->where('number_of_seats', '>=', $numberOfSeats);
 
-        if($cheaperTrip) $trips->where('id', '!=', $cheaperTrip->id);
-        if($fasterTrip) $trips->where('id', '!=', $fasterTrip->id);
+        if($cheaperTrip && $trips->count() > 2) $trips->where('id', '!=', $cheaperTrip->id);
+        if($fasterTrip && $trips->count() > 2) $trips->where('id', '!=', $fasterTrip->id);
 
         $trips = $trips->orderBy('departure_date')->get();
 
@@ -151,7 +162,17 @@ class TripController extends Controller
     {
         $trip = Trip::where('unique_key', $uniqueKey)->first();
 
-        return view('trips.show', ['trip' => $trip]);
+        $reserved = Trip::where('unique_key', $uniqueKey)->whereHas('users', function($q) {
+            $q->where('user_id', auth()->user()->id);
+        })->first();
+
+        if($reserved){
+            $reserved = true;
+        }else{
+            $reserved = false;
+        }
+
+        return view('trips.show', ['trip' => $trip, 'reserved' => $reserved]);
     }
 
     /**

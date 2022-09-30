@@ -70,6 +70,18 @@ class UserController extends Controller
         }
     }
 
+    public function updatePassword(Request $request) {
+        $user = User::find(auth()->user()->id);
+
+        if (!empty($user) && !empty($request->password)) {
+            $user->update([
+                'password' => Hash::make($request->password),
+            ]);
+        }
+
+        return redirect('/account');
+    }
+
     public function updateEmail(Request $request) {
         $user = User::find(auth()->user()->id);
 

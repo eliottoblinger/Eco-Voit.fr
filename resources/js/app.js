@@ -24,7 +24,6 @@ import FiltersComponent from "./components/tools/FiltersComponent";
 import RegisterComponent from "./components/auth/RegisterComponent";
 import AddTripComponent from "./components/trips/AddTripComponent";
 import LoginComponent from "./components/auth/LoginComponent";
-import UserTripsComponent from "./components/trips/UserTripsComponent";
 import AccountComponent from "./components/account/AccountComponent";
 import PaymentTrip from "./components/payment/PaymentTrip";
 
@@ -40,7 +39,6 @@ app.component('filters-component', FiltersComponent);
 app.component('register-component', RegisterComponent);
 app.component('add-trip-component', AddTripComponent);
 app.component('login-component', LoginComponent);
-app.component('user-trips-component', UserTripsComponent);
 app.component('account-component', AccountComponent);
 app.component('payment-trip-component', PaymentTrip);
 

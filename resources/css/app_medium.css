@@ -1,0 +1,86 @@
+.template_payment {
+    width: 100% !important;
+}
+
+.payment_component {
+    width: 95% !important;
+    margin-bottom: 15px;
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+}
+
+.picture_header {
+    margin-right: 10px !important;
+}
+
+.name_header {
+    display: none;
+}
+
+.components_payment {
+    margin-bottom: 50px !important;
+}
+
+.header_payment {
+    display: flex;
+    flex-direction: column;
+}
+
+.img_home {
+    max-width: 300px;
+    background-repeat: no-repeat;
+}
+
+.picture_ext_home {
+    background-repeat: no-repeat !important;
+    width: 400%;
+}
+
+.multi_trips_home {
+    display: flex;
+    flex-direction: column !important;
+}
+
+.unique_trip_home {
+    width: 100% !important;
+    margin-bottom: 2vh;
+}
+
+.search_number {
+    flex-direction: column !important;
+}
+
+.nb_passenger_home {
+    margin-top: 20px;
+}
+
+.components_account {
+    width: 100vw !important;
+    height: 100% !important;
+}
+
+.sm_size_text {
+    font-size: 13px !important;
+}
+
+.extend_col {
+    width: 80vw;
+}
+
+.tab_account {
+    width: 40vw !important;
+}
+
+.trip_by_account {
+    overflow: auto;
+    width: 100vw !important;
+}
+
+.components_checkout_trip {
+    width: 90vw !important;
+}
+
+.container_payment {
+    width: 40vw !important;
+}
+

@@ -14,7 +14,7 @@ class Trip extends Model
 
     public function users(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
-        return $this->belongsToMany(User::class, 'user_trip')->withPivot('qr_code_url', 'rating', 'opinion', 'is_driver');
+        return $this->belongsToMany(User::class, 'user_trip')->withPivot('user_id', 'qr_code_url', 'rating', 'opinion', 'is_driver');
     }
 
     public function driver()
