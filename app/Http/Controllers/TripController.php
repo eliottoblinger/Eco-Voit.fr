@@ -56,8 +56,12 @@ class TripController extends Controller
             ->where('departure_date', '>=', $departureDate)
             ->where('number_of_seats', '>=', $numberOfSeats);
 
-        if($cheaperTrip && $trips->count() > 2) $trips->where('id', '!=', $cheaperTrip->id);
-        if($fasterTrip && $trips->count() > 2) $trips->where('id', '!=', $fasterTrip->id);
+        if($cheaperTrip && $trips->count() > 2){
+            $trips->where('id', '!=', $cheaperTrip->id);
+        }
+        if($fasterTrip && $trips->count() > 2){
+            $trips->where('id', '!=', $fasterTrip->id);
+        }
 
         $trips = $trips->orderBy('departure_date')->get();
 
