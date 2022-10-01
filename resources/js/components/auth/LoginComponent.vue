@@ -67,8 +67,8 @@
 export default {
     name: "LoginComponent",
     mounted(){
-        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-        var tooltipList = tooltipTriggerList.map(function(element){
+        let tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        let tooltipList = tooltipTriggerList.map(function(element){
             return new bootstrap.Tooltip(element);
         });
     },

@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
+
+    private $accountUrl = '/account';
     /**
      * Display a listing of the resource.
      *
@@ -53,9 +55,12 @@ class UserController extends Controller
     }
 
     public function setPicture(Request $request) {
-        ini_set('memory_limit', '1024M');
-        ini_set('upload_max_filesize', '1024M');
-        ini_set('post_max_size', '1024M');
+        $size = '1024M';
+
+        ini_set('memory_limit', $size);
+        ini_set('upload_max_filesize', $size);
+        ini_set('post_max_size', $size);
+
         $s3 = Storage::disk('s3');
         $path = auth()->user()->id . "/profil-picture/avatar." . $request->file->extension();
         $res = $s3->put($path, file_get_contents($request->file->path()));
@@ -79,7 +84,7 @@ class UserController extends Controller
             ]);
         }
 
-        return redirect('/account');
+        return redirect($this->accountUrl);
     }
 
     public function updateEmail(Request $request) {
@@ -91,7 +96,7 @@ class UserController extends Controller
             ]);
         }
 
-        return redirect('/account');
+        return redirect($this->accountUrl);
     }
 
     public function updateIdentity(Request $request) {
@@ -104,7 +109,7 @@ class UserController extends Controller
             ]);
         }
 
-        return redirect('/account');
+        return redirect($this->accountUrl);
     }
 
     public function updateBio(Request $request) {
@@ -116,7 +121,7 @@ class UserController extends Controller
             ]);
         }
 
-        return redirect('/account');
+        return redirect($this->accountUrl);
     }
 
     /**

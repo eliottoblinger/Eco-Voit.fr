@@ -80,9 +80,9 @@
 export default {
     name: "RegisterComponent",
     mounted(){
-        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        let tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
         console.log(tooltipTriggerList)
-        var tooltipList = tooltipTriggerList.map(function(element){
+        let tooltipList = tooltipTriggerList.map(function(element){
             return new bootstrap.Tooltip(element);
         });
     },

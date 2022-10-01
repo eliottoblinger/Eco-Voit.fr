@@ -1,5 +1,5 @@
 <template>
-    <a :href="`/trips/${trip.unique_key}`" target="_blank" class="text-decoration-none text-black">
+    <div @click="openTrip" class="text-decoration-none text-black cursor-pointer">
         <div :class="[isFiltering && isFilterable ? 'bg-light' : 'bg-white', 'my-3', 'p-1', 'rounded-3', 'shadow-lg', 'fw-bold']" style="width: 300px">
             <div class="row mt-3 mb-1 px-3">
                 <div class="col-2">
@@ -68,7 +68,7 @@
                 </div>
             </div>
         </div>
-    </a>
+    </div>
 </template>
 
 <script>
@@ -79,6 +79,14 @@ export default {
     props: {
         trip: Object,
         isFilterable: Boolean
+    },
+    methods: {
+        openTrip(){
+            let anchor = document.createElement('a');
+            anchor.href = `/trips/${this.trip.unique_key}`;
+            anchor.target="_blank";
+            anchor.click();
+        }
     },
     computed: {
         ...mapGetters('TripsStore', [

@@ -16,10 +16,12 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
+        $pass = 'User57000!';
+
         $names = ['Chikhi', 'Oblinger', 'Doe'];
         $surnames = ['Fayçal', 'Eliott', 'John'];
         $emails = ['faycal@gmail.com', 'eliott@flippad.com', 'john@gmail.com'];
-        $passwords = ['User57000!', 'User57000!', 'User57000!'];
+        $passwords = [$pass, $pass, $pass];
         $roles = [2, 2, 1];
 
         foreach($names as $key => $name){
