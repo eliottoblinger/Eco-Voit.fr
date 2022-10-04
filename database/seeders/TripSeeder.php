@@ -16,7 +16,7 @@ class TripSeeder extends Seeder
      */
     public function run()
     {
-        $trips = Trip::factory()->count(30)->create();
+        $trips = Trip::factory()->count(15)->create();
         $trips->each(function (Trip $t) {
             User::find(1)->trips()->attach($t->id, [
                 'qr_code_url' => '',

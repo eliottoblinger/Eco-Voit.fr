@@ -24,7 +24,7 @@ class TripFactory extends Factory
 
         $departureCity = 'Paris';
         $arrivalCity = 'Lille';
-        $departureDate = $this->faker->dateTimeBetween('- 3 hours', '+ 8 hours');
+        $departureDate = $this->faker->dateTimeBetween('- 5 hours', '+ 1 day');
 
         return [
             'departure_city' => $departureCity,

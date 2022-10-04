@@ -16,13 +16,13 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        $pass = 'User57000!';
+        $pass = 'User12345!';
 
-        $names = ['Chikhi', 'Oblinger', 'Doe'];
-        $surnames = ['Fayçal', 'Eliott', 'John'];
-        $emails = ['faycal@gmail.com', 'eliott@flippad.com', 'john@gmail.com'];
+        $names = ['Chikhi', 'Oblinger', 'Super'];
+        $surnames = ['Fayçal', 'Eliott', 'Admin'];
+        $emails = ['faycal@gmail.com', 'eliott@flippad.com', 'admin@admin.com'];
         $passwords = [$pass, $pass, $pass];
-        $roles = [2, 2, 1];
+        $roles = [1, 1, 2];
 
         foreach($names as $key => $name){
             DB::table('users')->insert([
