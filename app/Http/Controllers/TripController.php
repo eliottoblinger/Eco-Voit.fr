@@ -26,32 +26,42 @@ class TripController extends Controller
 
         $numberOfSeats = $request->query('seats');
 
-        $userId = auth()->user()->id;
+        if(Auth::check()){
+            $userId = auth()->user()->id;
 
-        $cheaperTrip = Trip::whereDoesntHave('users', function($q) use ($userId) {
-            $q->where('user_id', $userId);
-        })
-            ->where('departure_city', 'like', '%'.$departureCity.'%')
+            $cheaperTrip = Trip::whereDoesntHave('users', function($q) use ($userId) {
+                $q->where('user_id', $userId);
+            })->where('departure_city', 'like', '%'.$departureCity.'%');
+
+            $fasterTrip = Trip::whereDoesntHave('users', function($q) use ($userId) {
+                $q->where('user_id', $userId);
+            })->where('departure_city', 'like', '%'.$departureCity.'%');
+            $trips = Trip::whereDoesntHave('users', function($q) use ($userId) {
+                $q->where('user_id', $userId);
+            })->where('departure_city', 'like', '%'.$departureCity.'%');
+        }else{
+            $cheaperTrip = Trip::where('departure_city', 'like', '%'.$departureCity.'%');
+
+            $fasterTrip = Trip::where('departure_city', 'like', '%'.$departureCity.'%');
+
+            $trips = Trip::where('departure_city', 'like', '%'.$departureCity.'%');
+        }
+
+        $cheaperTrip = $cheaperTrip
             ->where('arrival_city', 'like', '%'.$arrivalCity.'%')
             ->where('departure_date', '>=', $departureDate)
             ->where('number_of_seats', '>=', $numberOfSeats)
             ->orderBy('price')
             ->first();
 
-        $fasterTrip = Trip::whereDoesntHave('users', function($q) use ($userId) {
-            $q->where('user_id', $userId);
-        })
-            ->where('departure_city', 'like', '%'.$departureCity.'%')
+        $fasterTrip = $fasterTrip
             ->where('arrival_city', 'like', '%'.$arrivalCity.'%')
             ->where('departure_date', '>=', $departureDate)
             ->where('number_of_seats', '>=', $numberOfSeats)
             ->orderBy('duration', 'asc')
             ->first();
 
-        $trips = Trip::whereDoesntHave('users', function($q) use ($userId) {
-            $q->where('user_id', $userId);
-        })
-            ->where('departure_city', 'like', '%'.$departureCity.'%')
+        $trips = $trips
             ->where('arrival_city', 'like', '%'.$arrivalCity.'%')
             ->where('departure_date', '>=', $departureDate)
             ->where('number_of_seats', '>=', $numberOfSeats);
