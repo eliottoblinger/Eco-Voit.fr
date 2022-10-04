@@ -48,6 +48,13 @@ app.use(VCalendar);
 
 app.use(store);
 
+app.use((req,res,next)=>{
+    res.setHeader('Access-Control-Allow-Origin','*');
+    res.setHeader('Access-Control-Allow-Methods','GET,POST,PUT,PATCH,DELETE');
+    res.setHeader('Access-Control-Allow-Methods','Content-Type','Authorization');
+    next();
+});
+
 app.config.globalProperties.axios=axios
 
 app.mount('#app');
