@@ -32,7 +32,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/delete-account', [UserController::class, 'destroy'])->name("auth.logout");
     Route::get('/logout', [UserController::class, 'logout'])->name("auth.logout");
 
-    Route::middleware(['auth'])->group(function () {
+    Route::middleware(['role:2'])->group(function () {
         Route::get('/dashboard', function(){
             return view('dashboard.index');
         });

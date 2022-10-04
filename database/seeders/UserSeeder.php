@@ -18,9 +18,9 @@ class UserSeeder extends Seeder
     {
         $pass = 'User12345!';
 
-        $names = ['Chikhi', 'Oblinger', 'Super'];
-        $surnames = ['Fayçal', 'Eliott', 'Admin'];
-        $emails = ['faycal@gmail.com', 'eliott@flippad.com', 'admin@admin.com'];
+        $names = ['Doe', 'Oblinger', 'Super'];
+        $surnames = ['John', 'Eliott', 'Admin'];
+        $emails = ['john@gmail.com', 'eliott@flippad.com', 'admin@admin.com'];
         $passwords = [$pass, $pass, $pass];
         $roles = [1, 1, 2];
 
