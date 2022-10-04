@@ -200,7 +200,7 @@ export default {
             this.departures = [];
         },
         async searchDepartures(){
-            if(!this.searching && this.departure.trim().length > 3){
+            if(!this.searching && this.departure.length > 3){
                 this.departureCity = '';
                 this.departureZipCode = '';
                 this.departureAddress = '';
@@ -242,7 +242,7 @@ export default {
             this.duration = data.rows[0].elements[0].duration.value;
         },
         async searchArrivals(){
-            if(!this.searching && this.arrival.trim().length > 3) {
+            if(!this.searching && this.arrival.length > 3) {
                 this.arrivalCity = '';
                 this.arrivalZipCode = '';
                 this.arrivalAddress = '';
