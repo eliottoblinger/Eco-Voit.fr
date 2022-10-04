@@ -232,7 +232,7 @@ export default {
 
             const { data } = await axios.get('https://api.distancematrix.ai/maps/api/distancematrix/json', {
                 params: {
-                    key: 'eCMYOTcfT9GC78IiJfAPZRPGWaR4J',
+                    key: '6dfB2S8OXwxftiPub6mw4FBeJFZwT',
                     origins: `${this.departure}`,
                     destinations: `${this.arrival}`,
                 }
