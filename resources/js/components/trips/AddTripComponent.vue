@@ -200,7 +200,6 @@ export default {
             this.departures = [];
         },
         async searchDepartures(){
-            console.log(this.departure, this.departure.length)
             if(!this.searching && this.departure.length > 3){
                 this.departureCity = '';
                 this.departureZipCode = '';
